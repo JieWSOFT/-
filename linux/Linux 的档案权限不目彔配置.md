@@ -1,7 +1,8 @@
 ## Linux 文件属性
+---
 > 1.文件属性示意图<br>  
   <img src="img/directory.png" style="background-color: #fff"/>
-
+---
 > 2.档案的类型与权限内容<br> 
   <img src="img/powers.png" style="background-color: #fff"/>  
 > 档案类型
@@ -10,7 +11,7 @@
 > + 若是[ l ]则表示为连结档(link file)
 > + 若是[ b ]则表示为装置文件里面的可供储存的接口设备(可随机存取装置)
 > + 若是[ c ]则表示为装置文件里面的串行端口讴备,例如键盘、鼠标(一次怅读取装置) 
-
+---
 > 3.改变文件属性与权限  
   <br>&nbsp;&nbsp;&nbsp;&nbsp;chgrp: 改变档案所属群组
   <br>&nbsp;&nbsp;&nbsp;&nbsp;chown: 改变档案拥有者
