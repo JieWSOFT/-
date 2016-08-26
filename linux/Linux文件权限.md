@@ -37,6 +37,12 @@
     xyz : 就是刚刚提到的数字类型的权限属怅,为 rwx 属怅数值的相加。  
     -R : 迚行递归(recursive)的持续变更,亦即连同次目彔下的所有档案都会变更  
     例： chmod 777 档案或目录 
-> + 符号类型改变档案权限
+> + 符号类型改变档案权限  
+    chmod u/g/o/a  +/-/=  r/w/x  档案或目录  
+    三种身份：(1)user (2)group (3)other  
+    a代表all,即全部身份  
+    例：[root@wangjie ~]# chmod u=rwx,go=rx 档案或目录  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[root@wangjie ~]# chmod a-x 档案或目录
+    
     
 
