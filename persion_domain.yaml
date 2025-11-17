@@ -1,3 +1,4 @@
 payload:
- ＃ - DOMAIN-SUFFIX,tymd.fun
- ＃ - DOMAIN-KEYWORD,mediahelp
+  - DOMAIN-KEYWORD,nas.tymd.fun
+  - DOMAIN-KEYWORD,cs.tymd.fun
+  - DOMAIN-KEYWORD,ey.tymd.fun
