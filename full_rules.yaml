@@ -1,478 +1,282 @@
 # MediaTidy 综合规则文件
 # 来源: shenxianmq/GroupRe.txt + shutu777/custom_words.txt + custom_rendering_words.txt + custom_group.txt
-# 生成时间: 2026-03-03
+# 更新时间: 2026-03-03
 
-# ==================== 预处理规则 ====================
-preprocess:
+# ==================== 正则替换 (mr) ====================
+mr:
   # --- 容易误识别的年份标题 TMDB绑定 ---
-  - match: "^1923"
-    tmdb: 157744
-    type: tv
-  - match: "^1883"
-    tmdb: 118357
-    type: tv
-  - match: "^1942"
-    tmdb: 130063
-    type: tv
-  - match: "^1992.*?2015"
-    tmdb: 62459
-    type: tv
-  - match: "^2012\\."
+  - pattern: "^1923"
+    bind: { tmdb: 157744, media: tv }
+  - pattern: "^1883"
+    bind: { tmdb: 118357, media: tv }
+  - pattern: "^1942"
+    bind: { tmdb: 130063, media: tv }
+  - pattern: "^1992.*?2015"
+    bind: { tmdb: 62459, media: tv }
+  - pattern: "^2012\\."
     replace: "二零一二."
-  - match: "^1917\\."
+  - pattern: "^1917\\."
     replace: "一九一七."
-  - match: "^2046\\."
-    tmdb: 844
-    type: movie
+  - pattern: "^2046\\."
+    bind: { tmdb: 844, media: movie }
 
   # --- 数字开头容易混淆的标题 ---
-  - match: "^12\\.Monkeys"
+  - pattern: "^12\\.Monkeys"
     replace: "十二猴子."
-  - match: "11\\.Rebels"
-    tmdb: 1310682
-    type: movie
-  - match: "119\\.Emergency\\.Call\\."
+  - pattern: "11\\.Rebels"
+    bind: { tmdb: 1310682, media: movie }
+  - pattern: "119\\.Emergency\\.Call\\."
     replace: "119紧急呼叫."
-  - match: "101\\.Marriages"
+  - pattern: "101\\.Marriages"
     replace: "101次抢婚"
 
   # --- 特殊标题 TMDB绑定 ---
-  - match: "Madame\\.Web"
-    tmdb: 634492
-    type: movie
-  - match: "F1：狂飙飞车"
-    tmdb: 911430
-    type: movie
-  - match: "Move to Heaven：我是遗物整理师"
-    tmdb: 96571
-    type: tv
-  - match: "ONE：高中英雄们"
-    tmdb: 233219
-    type: tv
-  - match: "Perfect World"
-    tmdb: 124003
-    type: tv
-  - match: "成何体统 \\(2024\\)"
-    tmdb: 256783
-    type: tv
-  - match: "成何体统 \\(2026\\)"
-    tmdb: 280632
-    type: tv
-  - match: "Mother.*2009"
-    tmdb: 30018
-    type: movie
-  - match: "Resurrection.*2025"
-    tmdb: 878608
-    type: movie
-  - match: "超时空要塞\\sFrontier"
-    tmdb: 5857
-    type: tv
-  - match: "正义使者\\s*-\\s*我的英雄学院之非法英雄"
-    tmdb: 280110
-    type: tv
+  - pattern: "Madame\\.Web"
+    bind: { tmdb: 634492, media: movie }
+  - pattern: "F1：狂飙飞车"
+    bind: { tmdb: 911430, media: movie }
+  - pattern: "Move to Heaven：我是遗物整理师"
+    bind: { tmdb: 96571, media: tv }
+  - pattern: "ONE：高中英雄们"
+    bind: { tmdb: 233219, media: tv }
+  - pattern: "Perfect World"
+    bind: { tmdb: 124003, media: tv }
+  - pattern: "成何体统 \\(2024\\)"
+    bind: { tmdb: 256783, media: tv }
+  - pattern: "成何体统 \\(2026\\)"
+    bind: { tmdb: 280632, media: tv }
+  - pattern: "Mother.*2009"
+    bind: { tmdb: 30018, media: movie }
+  - pattern: "Resurrection.*2025"
+    bind: { tmdb: 878608, media: movie }
+  - pattern: "超时空要塞\\sFrontier"
+    bind: { tmdb: 5857, media: tv }
+  - pattern: "正义使者\\s*-\\s*我的英雄学院之非法英雄"
+    bind: { tmdb: 280110, media: tv }
 
   # --- 少女与战车 最终章系列 ---
-  - match: "少女与战车 最终章 ～第1话～"
-    tmdb: 474659
-    type: movie
-  - match: "少女与战车 最终章 ～第2话～"
-    tmdb: 496891
-    type: movie
-  - match: "少女与战车 最终章 ～第3话～"
-    tmdb: 746880
-    type: movie
-  - match: "少女与战车 最终章 ～第4话～"
-    tmdb: 1051192
-    type: movie
+  - pattern: "少女与战车 最终章 ～第1话～"
+    bind: { tmdb: 474659, media: movie }
+  - pattern: "少女与战车 最终章 ～第2话～"
+    bind: { tmdb: 496891, media: movie }
+  - pattern: "少女与战车 最终章 ～第3话～"
+    bind: { tmdb: 746880, media: movie }
+  - pattern: "少女与战车 最终章 ～第4话～"
+    bind: { tmdb: 1051192, media: movie }
 
   # --- 教父系列 ---
-  - match: "教父\\.1\\."
-    tmdb: 238
-    type: movie
-  - match: "The\\.Godfather\\.Part\\.I(?=[\\W_]|$)"
-    tmdb: 242
-    type: movie
-  - match: "The\\.Godfather\\.Part\\.1"
-    tmdb: 242
-    type: movie
-  - match: "教父\\.2\\."
-    tmdb: 240
-    type: movie
-  - match: "The\\.Godfather\\.Part\\.II"
-    tmdb: 240
-    type: movie
-  - match: "The\\.Godfather\\.Part\\.2"
-    tmdb: 240
-    type: movie
-  - match: "教父\\.3\\."
-    tmdb: 242
-    type: movie
-  - match: "The\\.Godfather\\.Part\\.III"
-    tmdb: 242
-    type: movie
-  - match: "The\\.Godfather\\.Part\\.3"
-    tmdb: 242
-    type: movie
+  - pattern: "教父\\.1\\."
+    bind: { tmdb: 238, media: movie }
+  - pattern: "The\\.Godfather\\.Part\\.I(?=[\\W_]|$)"
+    bind: { tmdb: 242, media: movie }
+  - pattern: "The\\.Godfather\\.Part\\.1"
+    bind: { tmdb: 242, media: movie }
+  - pattern: "教父\\.2\\."
+    bind: { tmdb: 240, media: movie }
+  - pattern: "The\\.Godfather\\.Part\\.II"
+    bind: { tmdb: 240, media: movie }
+  - pattern: "The\\.Godfather\\.Part\\.2"
+    bind: { tmdb: 240, media: movie }
+  - pattern: "教父\\.3\\."
+    bind: { tmdb: 242, media: movie }
+  - pattern: "The\\.Godfather\\.Part\\.III"
+    bind: { tmdb: 242, media: movie }
+  - pattern: "The\\.Godfather\\.Part\\.3"
+    bind: { tmdb: 242, media: movie }
 
   # --- 哈利波特系列 ---
-  - match: "Harry\\.Potter\\.I(?=[\\W_]|$)"
-    tmdb: 671
-    type: movie
-  - match: "哈利波特1"
-    tmdb: 671
-    type: movie
-  - match: "Harry\\.Potter\\.II"
-    tmdb: 672
-    type: movie
-  - match: "哈利波特2"
-    tmdb: 672
-    type: movie
-  - match: "Harry\\.Potter\\.III"
-    tmdb: 673
-    type: movie
-  - match: "哈利波特3"
-    tmdb: 673
-    type: movie
-  - match: "Harry\\.Potter\\.IV"
-    tmdb: 674
-    type: movie
-  - match: "哈利波特4"
-    tmdb: 674
-    type: movie
-  - match: "Harry\\.Potter\\.V"
-    tmdb: 675
-    type: movie
-  - match: "哈利波特5"
-    tmdb: 675
-    type: movie
-  - match: "Harry\\.Potter\\.VI"
-    tmdb: 767
-    type: movie
-  - match: "哈利波特6"
-    tmdb: 767
-    type: movie
-  - match: "Harry\\.Potter\\.and\\.the\\.Deathly\\.Hallows.* Part\\.1"
-    tmdb: 12444
-    type: movie
-  - match: "哈利波特与死亡圣器1"
-    tmdb: 12444
-    type: movie
-  - match: "Harry\\.Potter\\.and\\.the\\.Deathly\\.Hallows.* Part\\.2"
-    tmdb: 12445
-    type: movie
-  - match: "哈利波特与死亡圣器2"
-    tmdb: 12445
-    type: movie
+  - pattern: "Harry\\.Potter\\.I(?=[\\W_]|$)"
+    bind: { tmdb: 671, media: movie }
+  - pattern: "哈利波特1"
+    bind: { tmdb: 671, media: movie }
+  - pattern: "Harry\\.Potter\\.II"
+    bind: { tmdb: 672, media: movie }
+  - pattern: "哈利波特2"
+    bind: { tmdb: 672, media: movie }
+  - pattern: "Harry\\.Potter\\.III"
+    bind: { tmdb: 673, media: movie }
+  - pattern: "哈利波特3"
+    bind: { tmdb: 673, media: movie }
+  - pattern: "Harry\\.Potter\\.IV"
+    bind: { tmdb: 674, media: movie }
+  - pattern: "哈利波特4"
+    bind: { tmdb: 674, media: movie }
+  - pattern: "Harry\\.Potter\\.V"
+    bind: { tmdb: 675, media: movie }
+  - pattern: "哈利波特5"
+    bind: { tmdb: 675, media: movie }
+  - pattern: "Harry\\.Potter\\.VI"
+    bind: { tmdb: 767, media: movie }
+  - pattern: "哈利波特6"
+    bind: { tmdb: 767, media: movie }
+  - pattern: "Harry\\.Potter\\.and\\.the\\.Deathly\\.Hallows.* Part\\.1"
+    bind: { tmdb: 12444, media: movie }
+  - pattern: "哈利波特与死亡圣器1"
+    bind: { tmdb: 12444, media: movie }
+  - pattern: "Harry\\.Potter\\.and\\.the\\.Deathly\\.Hallows.* Part\\.2"
+    bind: { tmdb: 12445, media: movie }
+  - pattern: "哈利波特与死亡圣器2"
+    bind: { tmdb: 12445, media: movie }
 
   # --- 国漫 ---
-  - match: "斗破苍宆"
-    tmdb: 79481
-    type: tv
+  - pattern: "斗破苍宆"
+    bind: { tmdb: 79481, media: tv }
 
   # --- 日漫长篇集数绑定 ---
-  - match: "樱桃小丸子第二期.*?\\[(\\d{4})\\]"
-    tmdb: 57775
-    type: tv
-    season: 2
-    episode: "$1"
-  - match: "Chibi Maruko-chan II.*?\\[(\\d+)\\]"
-    tmdb: 57775
-    type: tv
-    season: 2
-    episode: "$1"
-  - match: "NewDoraemon哆啦A梦新番\\[(\\d+)\\]"
-    tmdb: 65733
-    type: tv
-    season: 1
-    episode: "$1"
+  - pattern: "樱桃小丸子第二期.*?\\[(\\d{4})\\]"
+    bind: { tmdb: 57775, media: tv, season: 2, episode: "$1" }
+  - pattern: "Chibi Maruko-chan II.*?\\[(\\d+)\\]"
+    bind: { tmdb: 57775, media: tv, season: 2, episode: "$1" }
+  - pattern: "NewDoraemon哆啦A梦新番\\[(\\d+)\\]"
+    bind: { tmdb: 65733, media: tv, season: 1, episode: "$1" }
 
   # --- 无效发布组标签清理 ---
-  - match: "-SC(?=[\\W_]|$)"
-  - match: "-SCDIY(?=[\\W_]|$)"
-  - match: "-WF(?=[\\W_]|$)"
-  - match: "-404(?=[\\W_]|$)"
-  - match: "Ftang"
-
-  # 注: 编码格式(H.264/x265)、分辨率(4K)、帧率(24fps)、位深(10bit)
-  # 以及媒体平台名(Netflix.WEB-DL)均由 guessit 内置识别，无需预处理
+  - pattern: "-SC(?=[\\W_]|$)"
+    action: remove
+  - pattern: "-SCDIY(?=[\\W_]|$)"
+    action: remove
+  - pattern: "-WF(?=[\\W_]|$)"
+    action: remove
+  - pattern: "-404(?=[\\W_]|$)"
+    action: remove
+  - pattern: "Ftang"
+    action: remove
 
   # --- 特殊格式文件名清理 ---
-  - match: "^\\[\\d{4}]\\[(?:中国|大陆|台湾|香港|美国|英国|法国|德国|意大利|西班牙|俄罗斯|日本|韩国|印度|泰国|越南|澳大利亚|加拿大|新西兰|墨西哥|巴西|阿根廷|土耳其|捷克|匈牙利|波兰|瑞典|挪威|丹麦|芬兰)].*?\\[.*?GB](.*?)(LGNB)"
+  - pattern: "^\\[\\d{4}]\\[(?:中国|大陆|台湾|香港|美国|英国|法国|德国|意大利|西班牙|俄罗斯|日本|韩国|印度|泰国|越南|澳大利亚|加拿大|新西兰|墨西哥|巴西|阿根廷|土耳其|捷克|匈牙利|波兰|瑞典|挪威|丹麦|芬兰)].*?\\[.*?GB](.*?)(LGNB)"
     replace: "$1$2"
-  - match: "中配"
-  - match: "日配"
+  - pattern: "中配"
+    action: remove
+  - pattern: "日配"
+    action: remove
 
-# ==================== 季集映射规则 ====================
-remap:
+# ==================== 季集映射 (mp) ====================
+mp:
   # 关于我转生变成史莱姆这档事
   - tmdb: 82684
-    src_season: 1
-    src_ep_start: 25
-    src_ep_end: 48
-    dst_season: 2
-    dst_ep_start: 1
-    dst_ep_end: 24
+    from: { season: 1, ep: [25, 48] }
+    to:   { season: 2, ep: [1, 24] }
   - tmdb: 82684
-    src_season: 1
-    src_ep_start: 49
-    src_ep_end: 72
-    dst_season: 3
-    dst_ep_start: 1
-    dst_ep_end: 24
+    from: { season: 1, ep: [49, 72] }
+    to:   { season: 3, ep: [1, 24] }
   # 咒术回战
   - tmdb: 95479
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 12
-    dst_season: 1
-    dst_ep_start: 25
-    dst_ep_end: 36
+    from: { season: 2, ep: [1, 12] }
+    to:   { season: 1, ep: [25, 36] }
   - tmdb: 95479
-    src_season: 3
-    src_ep_start: 1
-    src_ep_end: 12
-    dst_season: 1
-    dst_ep_start: 48
-    dst_ep_end: 59
+    from: { season: 3, ep: [1, 12] }
+    to:   { season: 1, ep: [48, 59] }
   # 绝对可怜小孩
   - tmdb: 42926
-    src_season: 1
-    src_ep_start: 27
-    src_ep_end: 51
-    dst_season: 2
-    dst_ep_start: 1
-    dst_ep_end: 25
+    from: { season: 1, ep: [27, 51] }
+    to:   { season: 2, ep: [1, 25] }
   # 机动战士高达逆A
   - tmdb: 37546
-    src_season: 1
-    src_ep_start: 26
-    src_ep_end: 50
-    dst_season: 2
-    dst_ep_start: 1
-    dst_ep_end: 25
+    from: { season: 1, ep: [26, 50] }
+    to:   { season: 2, ep: [1, 25] }
   # 我推的孩子
   - tmdb: 203737
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 13
-    dst_season: 1
-    dst_ep_start: 12
-    dst_ep_end: 24
+    from: { season: 2, ep: [1, 13] }
+    to:   { season: 1, ep: [12, 24] }
   - tmdb: 203737
-    src_season: 3
-    src_ep_start: 1
-    src_ep_end: 11
-    dst_season: 1
-    dst_ep_start: 25
-    dst_ep_end: 35
+    from: { season: 3, ep: [1, 11] }
+    to:   { season: 1, ep: [25, 35] }
   # 葬送的芙莉莲
   - tmdb: 209867
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 28
-    dst_season: 1
-    dst_ep_start: 29
-    dst_ep_end: 56
+    from: { season: 2, ep: [1, 28] }
+    to:   { season: 1, ep: [29, 56] }
   # 百炼成神
   - tmdb: 213791
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 52
-    dst_season: 1
-    dst_ep_start: 53
-    dst_ep_end: 104
+    from: { season: 2, ep: [1, 52] }
+    to:   { season: 1, ep: [53, 104] }
   - tmdb: 213791
-    src_season: 3
-    src_ep_start: 1
-    src_ep_end: 52
-    dst_season: 1
-    dst_ep_start: 105
-    dst_ep_end: 156
+    from: { season: 3, ep: [1, 52] }
+    to:   { season: 1, ep: [105, 156] }
   # 龙珠Z
   - tmdb: 12971
-    src_season: 1
-    src_ep_start: 40
-    src_ep_end: 74
-    dst_season: 2
-    dst_ep_start: 1
-    dst_ep_end: 35
+    from: { season: 1, ep: [40, 74] }
+    to:   { season: 2, ep: [1, 35] }
   - tmdb: 12971
-    src_season: 1
-    src_ep_start: 75
-    src_ep_end: 107
-    dst_season: 3
-    dst_ep_start: 1
-    dst_ep_end: 33
+    from: { season: 1, ep: [75, 107] }
+    to:   { season: 3, ep: [1, 33] }
   - tmdb: 12971
-    src_season: 1
-    src_ep_start: 108
-    src_ep_end: 139
-    dst_season: 4
-    dst_ep_start: 1
-    dst_ep_end: 32
+    from: { season: 1, ep: [108, 139] }
+    to:   { season: 4, ep: [1, 32] }
   - tmdb: 12971
-    src_season: 1
-    src_ep_start: 140
-    src_ep_end: 165
-    dst_season: 5
-    dst_ep_start: 1
-    dst_ep_end: 26
+    from: { season: 1, ep: [140, 165] }
+    to:   { season: 5, ep: [1, 26] }
   - tmdb: 12971
-    src_season: 1
-    src_ep_start: 166
-    src_ep_end: 194
-    dst_season: 6
-    dst_ep_start: 1
-    dst_ep_end: 29
+    from: { season: 1, ep: [166, 194] }
+    to:   { season: 6, ep: [1, 29] }
   - tmdb: 12971
-    src_season: 1
-    src_ep_start: 195
-    src_ep_end: 219
-    dst_season: 7
-    dst_ep_start: 1
-    dst_ep_end: 25
+    from: { season: 1, ep: [195, 219] }
+    to:   { season: 7, ep: [1, 25] }
   - tmdb: 12971
-    src_season: 1
-    src_ep_start: 220
-    src_ep_end: 253
-    dst_season: 8
-    dst_ep_start: 1
-    dst_ep_end: 34
+    from: { season: 1, ep: [220, 253] }
+    to:   { season: 8, ep: [1, 34] }
   - tmdb: 12971
-    src_season: 1
-    src_ep_start: 254
-    src_ep_end: 291
-    dst_season: 9
-    dst_ep_start: 1
-    dst_ep_end: 38
+    from: { season: 1, ep: [254, 291] }
+    to:   { season: 9, ep: [1, 38] }
   # 龙珠GT (特别篇)
   - tmdb: 12697
-    src_season: 1
-    src_ep_start: 65
-    src_ep_end: 66
-    dst_season: 0
-    dst_ep_start: 1
-    dst_ep_end: 2
+    from: { season: 1, ep: [65, 66] }
+    to:   { season: 0, ep: [1, 2] }
   # 一念永恒
   - tmdb: 107371
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 54
-    dst_season: 1
-    dst_ep_start: 53
-    dst_ep_end: 106
+    from: { season: 2, ep: [1, 54] }
+    to:   { season: 1, ep: [53, 106] }
   - tmdb: 107371
-    src_season: 3
-    src_ep_start: 1
-    src_ep_end: 59
-    dst_season: 1
-    dst_ep_start: 107
-    dst_ep_end: 165
+    from: { season: 3, ep: [1, 59] }
+    to:   { season: 1, ep: [107, 165] }
   # 游戏王-怪兽之决斗
   - tmdb: 902
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 48
-    dst_season: 1
-    dst_ep_start: 50
-    dst_ep_end: 97
+    from: { season: 2, ep: [1, 48] }
+    to:   { season: 1, ep: [50, 97] }
   - tmdb: 902
-    src_season: 3
-    src_ep_start: 1
-    src_ep_end: 47
-    dst_season: 1
-    dst_ep_start: 98
-    dst_ep_end: 144
+    from: { season: 3, ep: [1, 47] }
+    to:   { season: 1, ep: [98, 144] }
   - tmdb: 902
-    src_season: 4
-    src_ep_start: 1
-    src_ep_end: 40
-    dst_season: 1
-    dst_ep_start: 145
-    dst_ep_end: 184
+    from: { season: 4, ep: [1, 40] }
+    to:   { season: 1, ep: [145, 184] }
   - tmdb: 902
-    src_season: 5
-    src_ep_start: 1
-    src_ep_end: 40
-    dst_season: 1
-    dst_ep_start: 185
-    dst_ep_end: 224
+    from: { season: 5, ep: [1, 40] }
+    to:   { season: 1, ep: [185, 224] }
   # 文豪野犬
   - tmdb: 65931
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 12
-    dst_season: 1
-    dst_ep_start: 13
-    dst_ep_end: 24
+    from: { season: 2, ep: [1, 12] }
+    to:   { season: 1, ep: [13, 24] }
   - tmdb: 65931
-    src_season: 3
-    src_ep_start: 1
-    src_ep_end: 12
-    dst_season: 1
-    dst_ep_start: 25
-    dst_ep_end: 36
+    from: { season: 3, ep: [1, 12] }
+    to:   { season: 1, ep: [25, 36] }
   - tmdb: 65931
-    src_season: 2
-    src_ep_start: 13
-    src_ep_end: 13
-    dst_season: 0
-    dst_ep_start: 1
-    dst_ep_end: 1
+    from: { season: 2, ep: [13, 13] }
+    to:   { season: 0, ep: [1, 1] }
   - tmdb: 65931
-    src_season: 4
-    src_ep_start: 1
-    src_ep_end: 13
-    dst_season: 1
-    dst_ep_start: 37
-    dst_ep_end: 49
+    from: { season: 4, ep: [1, 13] }
+    to:   { season: 1, ep: [37, 49] }
   - tmdb: 65931
-    src_season: 5
-    src_ep_start: 1
-    src_ep_end: 11
-    dst_season: 1
-    dst_ep_start: 50
-    dst_ep_end: 60
+    from: { season: 5, ep: [1, 11] }
+    to:   { season: 1, ep: [50, 60] }
   # 再见，地球
   - tmdb: 214587
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 10
-    dst_season: 1
-    dst_ep_start: 11
-    dst_ep_end: 20
+    from: { season: 2, ep: [1, 10] }
+    to:   { season: 1, ep: [11, 20] }
   # 半妖的夜叉姬
   - tmdb: 103254
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 24
-    dst_season: 1
-    dst_ep_start: 25
-    dst_ep_end: 48
+    from: { season: 2, ep: [1, 24] }
+    to:   { season: 1, ep: [25, 48] }
   # 婚戒物语
   - tmdb: 218493
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 13
-    dst_season: 1
-    dst_ep_start: 13
-    dst_ep_end: 25
+    from: { season: 2, ep: [1, 13] }
+    to:   { season: 1, ep: [13, 25] }
   # 我的幸福婚姻
   - tmdb: 196944
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 13
-    dst_season: 1
-    dst_ep_start: 13
-    dst_ep_end: 25
+    from: { season: 2, ep: [1, 13] }
+    to:   { season: 1, ep: [13, 25] }
   # 皮奥里亚王子
   - tmdb: 84111
-    src_season: 2
-    src_ep_start: 1
-    src_ep_end: 8
-    dst_season: 1
-    dst_ep_start: 9
-    dst_ep_end: 16
+    from: { season: 2, ep: [1, 8] }
+    to:   { season: 1, ep: [9, 16] }
 
 # ==================== 制作组 ====================
 groups:
@@ -742,3 +546,44 @@ streaming:
     keywords: [playWEB]
   - name: PMSP
     keywords: [PMSP]
+
+# ==================== 地区编码 ====================
+region:
+  - name: CEE
+    keywords: [CEE]
+  - name: HKG
+    keywords: [HKG, "Hong Kong"]
+  - name: USA
+    keywords: [USA, US]
+  - name: GBR
+    keywords: [GBR, UK]
+  - name: GER
+    keywords: [GER, DEU]
+  - name: KOR
+    keywords: [KOR, KR]
+  - name: CHN
+    keywords: [CHN, CN]
+  - name: JPN
+    keywords: [JPN, JP]
+  - name: ITA
+    keywords: [ITA, IT]
+  - name: EUR
+    keywords: [EUR]
+  - name: FRA
+    keywords: [FRA, FR]
+  - name: TWN
+    keywords: [TWN, TW]
+  - name: BRA
+    keywords: [BRA, BR]
+  - name: AUS
+    keywords: [AUS, AU]
+  - name: NLD
+    keywords: [NLD, NL]
+  - name: ESP
+    keywords: [ESP, ES]
+  - name: NOR
+    keywords: [NOR, "NO"]
+  - name: CAN
+    keywords: [CAN, CA]
+  - name: FIN
+    keywords: [FIN, FI]
