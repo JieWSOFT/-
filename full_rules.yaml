@@ -186,51 +186,15 @@ preprocess:
     season: 1
     episode: "$1"
 
-  # --- 无效标签清理 ---
+  # --- 无效发布组标签清理 ---
   - match: "-SC(?=[\\W_]|$)"
   - match: "-SCDIY(?=[\\W_]|$)"
   - match: "-WF(?=[\\W_]|$)"
   - match: "-404(?=[\\W_]|$)"
   - match: "Ftang"
 
-  # --- 编码格式标准化 ---
-  - match: "(?i)\\.H\\.?264(?=[\\W_.])"
-    replace: ".AVC"
-  - match: "(?i)\\.H\\.?265(?=[\\W_.])"
-    replace: ".HEVC"
-  - match: "(?i)\\.x264(?=[\\W_.])"
-    replace: ".AVC"
-  - match: "(?i)\\.x265(?=[\\W_.])"
-    replace: ".HEVC"
-
-  # --- 4K标准化 ---
-  - match: "(?<=[\\W_])4k(?=[\\W_])"
-    replace: "2160p"
-
-  # --- 无用帧率/位深标记清理 ---
-  - match: "\\.(?:[0-5]\\dfps|59fps|10-bit|10bit)"
-
-  # --- 流媒体名称从WEB-DL标签清理 ---
-  - match: "Netflix\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "Amazon Prime\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "AppleTV\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "Disney\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "IQ\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "KKTV\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "TVING\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "iTunes\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "friDay\\.WEB-DL"
-    replace: "WEB-DL"
-  - match: "MyTVSuper\\.WEB-DL"
-    replace: "WEB-DL"
+  # 注: 编码格式(H.264/x265)、分辨率(4K)、帧率(24fps)、位深(10bit)
+  # 以及媒体平台名(Netflix.WEB-DL)均由 guessit 内置识别，无需预处理
 
   # --- 特殊格式文件名清理 ---
   - match: "^\\[\\d{4}]\\[(?:中国|大陆|台湾|香港|美国|英国|法国|德国|意大利|西班牙|俄罗斯|日本|韩国|印度|泰国|越南|澳大利亚|加拿大|新西兰|墨西哥|巴西|阿根廷|土耳其|捷克|匈牙利|波兰|瑞典|挪威|丹麦|芬兰)].*?\\[.*?GB](.*?)(LGNB)"
