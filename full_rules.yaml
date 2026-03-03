@@ -1,0 +1,780 @@
+# MediaTidy 综合规则文件
+# 来源: shenxianmq/GroupRe.txt + shutu777/custom_words.txt + custom_rendering_words.txt + custom_group.txt
+# 生成时间: 2026-03-03
+
+# ==================== 预处理规则 ====================
+preprocess:
+  # --- 容易误识别的年份标题 TMDB绑定 ---
+  - match: "^1923"
+    tmdb: 157744
+    type: tv
+  - match: "^1883"
+    tmdb: 118357
+    type: tv
+  - match: "^1942"
+    tmdb: 130063
+    type: tv
+  - match: "^1992.*?2015"
+    tmdb: 62459
+    type: tv
+  - match: "^2012\\."
+    replace: "二零一二."
+  - match: "^1917\\."
+    replace: "一九一七."
+  - match: "^2046\\."
+    tmdb: 844
+    type: movie
+
+  # --- 数字开头容易混淆的标题 ---
+  - match: "^12\\.Monkeys"
+    replace: "十二猴子."
+  - match: "11\\.Rebels"
+    tmdb: 1310682
+    type: movie
+  - match: "119\\.Emergency\\.Call\\."
+    replace: "119紧急呼叫."
+  - match: "101\\.Marriages"
+    replace: "101次抢婚"
+
+  # --- 特殊标题 TMDB绑定 ---
+  - match: "Madame\\.Web"
+    tmdb: 634492
+    type: movie
+  - match: "F1：狂飙飞车"
+    tmdb: 911430
+    type: movie
+  - match: "Move to Heaven：我是遗物整理师"
+    tmdb: 96571
+    type: tv
+  - match: "ONE：高中英雄们"
+    tmdb: 233219
+    type: tv
+  - match: "Perfect World"
+    tmdb: 124003
+    type: tv
+  - match: "成何体统 \\(2024\\)"
+    tmdb: 256783
+    type: tv
+  - match: "成何体统 \\(2026\\)"
+    tmdb: 280632
+    type: tv
+  - match: "Mother.*2009"
+    tmdb: 30018
+    type: movie
+  - match: "Resurrection.*2025"
+    tmdb: 878608
+    type: movie
+  - match: "超时空要塞\\sFrontier"
+    tmdb: 5857
+    type: tv
+  - match: "正义使者\\s*-\\s*我的英雄学院之非法英雄"
+    tmdb: 280110
+    type: tv
+
+  # --- 少女与战车 最终章系列 ---
+  - match: "少女与战车 最终章 ～第1话～"
+    tmdb: 474659
+    type: movie
+  - match: "少女与战车 最终章 ～第2话～"
+    tmdb: 496891
+    type: movie
+  - match: "少女与战车 最终章 ～第3话～"
+    tmdb: 746880
+    type: movie
+  - match: "少女与战车 最终章 ～第4话～"
+    tmdb: 1051192
+    type: movie
+
+  # --- 教父系列 ---
+  - match: "教父\\.1\\."
+    tmdb: 238
+    type: movie
+  - match: "The\\.Godfather\\.Part\\.I(?=[\\W_]|$)"
+    tmdb: 242
+    type: movie
+  - match: "The\\.Godfather\\.Part\\.1"
+    tmdb: 242
+    type: movie
+  - match: "教父\\.2\\."
+    tmdb: 240
+    type: movie
+  - match: "The\\.Godfather\\.Part\\.II"
+    tmdb: 240
+    type: movie
+  - match: "The\\.Godfather\\.Part\\.2"
+    tmdb: 240
+    type: movie
+  - match: "教父\\.3\\."
+    tmdb: 242
+    type: movie
+  - match: "The\\.Godfather\\.Part\\.III"
+    tmdb: 242
+    type: movie
+  - match: "The\\.Godfather\\.Part\\.3"
+    tmdb: 242
+    type: movie
+
+  # --- 哈利波特系列 ---
+  - match: "Harry\\.Potter\\.I(?=[\\W_]|$)"
+    tmdb: 671
+    type: movie
+  - match: "哈利波特1"
+    tmdb: 671
+    type: movie
+  - match: "Harry\\.Potter\\.II"
+    tmdb: 672
+    type: movie
+  - match: "哈利波特2"
+    tmdb: 672
+    type: movie
+  - match: "Harry\\.Potter\\.III"
+    tmdb: 673
+    type: movie
+  - match: "哈利波特3"
+    tmdb: 673
+    type: movie
+  - match: "Harry\\.Potter\\.IV"
+    tmdb: 674
+    type: movie
+  - match: "哈利波特4"
+    tmdb: 674
+    type: movie
+  - match: "Harry\\.Potter\\.V"
+    tmdb: 675
+    type: movie
+  - match: "哈利波特5"
+    tmdb: 675
+    type: movie
+  - match: "Harry\\.Potter\\.VI"
+    tmdb: 767
+    type: movie
+  - match: "哈利波特6"
+    tmdb: 767
+    type: movie
+  - match: "Harry\\.Potter\\.and\\.the\\.Deathly\\.Hallows.* Part\\.1"
+    tmdb: 12444
+    type: movie
+  - match: "哈利波特与死亡圣器1"
+    tmdb: 12444
+    type: movie
+  - match: "Harry\\.Potter\\.and\\.the\\.Deathly\\.Hallows.* Part\\.2"
+    tmdb: 12445
+    type: movie
+  - match: "哈利波特与死亡圣器2"
+    tmdb: 12445
+    type: movie
+
+  # --- 国漫 ---
+  - match: "斗破苍宆"
+    tmdb: 79481
+    type: tv
+
+  # --- 日漫长篇集数绑定 ---
+  - match: "樱桃小丸子第二期.*?\\[(\\d{4})\\]"
+    tmdb: 57775
+    type: tv
+    season: 2
+    episode: "$1"
+  - match: "Chibi Maruko-chan II.*?\\[(\\d+)\\]"
+    tmdb: 57775
+    type: tv
+    season: 2
+    episode: "$1"
+  - match: "NewDoraemon哆啦A梦新番\\[(\\d+)\\]"
+    tmdb: 65733
+    type: tv
+    season: 1
+    episode: "$1"
+
+  # --- 无效标签清理 ---
+  - match: "-SC(?=[\\W_]|$)"
+  - match: "-SCDIY(?=[\\W_]|$)"
+  - match: "-WF(?=[\\W_]|$)"
+  - match: "-404(?=[\\W_]|$)"
+  - match: "Ftang"
+
+  # --- 编码格式标准化 ---
+  - match: "(?i)\\.H\\.?264(?=[\\W_.])"
+    replace: ".AVC"
+  - match: "(?i)\\.H\\.?265(?=[\\W_.])"
+    replace: ".HEVC"
+  - match: "(?i)\\.x264(?=[\\W_.])"
+    replace: ".AVC"
+  - match: "(?i)\\.x265(?=[\\W_.])"
+    replace: ".HEVC"
+
+  # --- 4K标准化 ---
+  - match: "(?<=[\\W_])4k(?=[\\W_])"
+    replace: "2160p"
+
+  # --- 无用帧率/位深标记清理 ---
+  - match: "\\.(?:[0-5]\\dfps|59fps|10-bit|10bit)"
+
+  # --- 流媒体名称从WEB-DL标签清理 ---
+  - match: "Netflix\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "Amazon Prime\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "AppleTV\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "Disney\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "IQ\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "KKTV\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "TVING\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "iTunes\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "friDay\\.WEB-DL"
+    replace: "WEB-DL"
+  - match: "MyTVSuper\\.WEB-DL"
+    replace: "WEB-DL"
+
+  # --- 特殊格式文件名清理 ---
+  - match: "^\\[\\d{4}]\\[(?:中国|大陆|台湾|香港|美国|英国|法国|德国|意大利|西班牙|俄罗斯|日本|韩国|印度|泰国|越南|澳大利亚|加拿大|新西兰|墨西哥|巴西|阿根廷|土耳其|捷克|匈牙利|波兰|瑞典|挪威|丹麦|芬兰)].*?\\[.*?GB](.*?)(LGNB)"
+    replace: "$1$2"
+  - match: "中配"
+  - match: "日配"
+
+# ==================== 季集映射规则 ====================
+remap:
+  # 关于我转生变成史莱姆这档事
+  - tmdb: 82684
+    src_season: 1
+    src_ep_start: 25
+    src_ep_end: 48
+    dst_season: 2
+    dst_ep_start: 1
+    dst_ep_end: 24
+  - tmdb: 82684
+    src_season: 1
+    src_ep_start: 49
+    src_ep_end: 72
+    dst_season: 3
+    dst_ep_start: 1
+    dst_ep_end: 24
+  # 咒术回战
+  - tmdb: 95479
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 12
+    dst_season: 1
+    dst_ep_start: 25
+    dst_ep_end: 36
+  - tmdb: 95479
+    src_season: 3
+    src_ep_start: 1
+    src_ep_end: 12
+    dst_season: 1
+    dst_ep_start: 48
+    dst_ep_end: 59
+  # 绝对可怜小孩
+  - tmdb: 42926
+    src_season: 1
+    src_ep_start: 27
+    src_ep_end: 51
+    dst_season: 2
+    dst_ep_start: 1
+    dst_ep_end: 25
+  # 机动战士高达逆A
+  - tmdb: 37546
+    src_season: 1
+    src_ep_start: 26
+    src_ep_end: 50
+    dst_season: 2
+    dst_ep_start: 1
+    dst_ep_end: 25
+  # 我推的孩子
+  - tmdb: 203737
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 13
+    dst_season: 1
+    dst_ep_start: 12
+    dst_ep_end: 24
+  - tmdb: 203737
+    src_season: 3
+    src_ep_start: 1
+    src_ep_end: 11
+    dst_season: 1
+    dst_ep_start: 25
+    dst_ep_end: 35
+  # 葬送的芙莉莲
+  - tmdb: 209867
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 28
+    dst_season: 1
+    dst_ep_start: 29
+    dst_ep_end: 56
+  # 百炼成神
+  - tmdb: 213791
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 52
+    dst_season: 1
+    dst_ep_start: 53
+    dst_ep_end: 104
+  - tmdb: 213791
+    src_season: 3
+    src_ep_start: 1
+    src_ep_end: 52
+    dst_season: 1
+    dst_ep_start: 105
+    dst_ep_end: 156
+  # 龙珠Z
+  - tmdb: 12971
+    src_season: 1
+    src_ep_start: 40
+    src_ep_end: 74
+    dst_season: 2
+    dst_ep_start: 1
+    dst_ep_end: 35
+  - tmdb: 12971
+    src_season: 1
+    src_ep_start: 75
+    src_ep_end: 107
+    dst_season: 3
+    dst_ep_start: 1
+    dst_ep_end: 33
+  - tmdb: 12971
+    src_season: 1
+    src_ep_start: 108
+    src_ep_end: 139
+    dst_season: 4
+    dst_ep_start: 1
+    dst_ep_end: 32
+  - tmdb: 12971
+    src_season: 1
+    src_ep_start: 140
+    src_ep_end: 165
+    dst_season: 5
+    dst_ep_start: 1
+    dst_ep_end: 26
+  - tmdb: 12971
+    src_season: 1
+    src_ep_start: 166
+    src_ep_end: 194
+    dst_season: 6
+    dst_ep_start: 1
+    dst_ep_end: 29
+  - tmdb: 12971
+    src_season: 1
+    src_ep_start: 195
+    src_ep_end: 219
+    dst_season: 7
+    dst_ep_start: 1
+    dst_ep_end: 25
+  - tmdb: 12971
+    src_season: 1
+    src_ep_start: 220
+    src_ep_end: 253
+    dst_season: 8
+    dst_ep_start: 1
+    dst_ep_end: 34
+  - tmdb: 12971
+    src_season: 1
+    src_ep_start: 254
+    src_ep_end: 291
+    dst_season: 9
+    dst_ep_start: 1
+    dst_ep_end: 38
+  # 龙珠GT (特别篇)
+  - tmdb: 12697
+    src_season: 1
+    src_ep_start: 65
+    src_ep_end: 66
+    dst_season: 0
+    dst_ep_start: 1
+    dst_ep_end: 2
+  # 一念永恒
+  - tmdb: 107371
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 54
+    dst_season: 1
+    dst_ep_start: 53
+    dst_ep_end: 106
+  - tmdb: 107371
+    src_season: 3
+    src_ep_start: 1
+    src_ep_end: 59
+    dst_season: 1
+    dst_ep_start: 107
+    dst_ep_end: 165
+  # 游戏王-怪兽之决斗
+  - tmdb: 902
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 48
+    dst_season: 1
+    dst_ep_start: 50
+    dst_ep_end: 97
+  - tmdb: 902
+    src_season: 3
+    src_ep_start: 1
+    src_ep_end: 47
+    dst_season: 1
+    dst_ep_start: 98
+    dst_ep_end: 144
+  - tmdb: 902
+    src_season: 4
+    src_ep_start: 1
+    src_ep_end: 40
+    dst_season: 1
+    dst_ep_start: 145
+    dst_ep_end: 184
+  - tmdb: 902
+    src_season: 5
+    src_ep_start: 1
+    src_ep_end: 40
+    dst_season: 1
+    dst_ep_start: 185
+    dst_ep_end: 224
+  # 文豪野犬
+  - tmdb: 65931
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 12
+    dst_season: 1
+    dst_ep_start: 13
+    dst_ep_end: 24
+  - tmdb: 65931
+    src_season: 3
+    src_ep_start: 1
+    src_ep_end: 12
+    dst_season: 1
+    dst_ep_start: 25
+    dst_ep_end: 36
+  - tmdb: 65931
+    src_season: 2
+    src_ep_start: 13
+    src_ep_end: 13
+    dst_season: 0
+    dst_ep_start: 1
+    dst_ep_end: 1
+  - tmdb: 65931
+    src_season: 4
+    src_ep_start: 1
+    src_ep_end: 13
+    dst_season: 1
+    dst_ep_start: 37
+    dst_ep_end: 49
+  - tmdb: 65931
+    src_season: 5
+    src_ep_start: 1
+    src_ep_end: 11
+    dst_season: 1
+    dst_ep_start: 50
+    dst_ep_end: 60
+  # 再见，地球
+  - tmdb: 214587
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 10
+    dst_season: 1
+    dst_ep_start: 11
+    dst_ep_end: 20
+  # 半妖的夜叉姬
+  - tmdb: 103254
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 24
+    dst_season: 1
+    dst_ep_start: 25
+    dst_ep_end: 48
+  # 婚戒物语
+  - tmdb: 218493
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 13
+    dst_season: 1
+    dst_ep_start: 13
+    dst_ep_end: 25
+  # 我的幸福婚姻
+  - tmdb: 196944
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 13
+    dst_season: 1
+    dst_ep_start: 13
+    dst_ep_end: 25
+  # 皮奥里亚王子
+  - tmdb: 84111
+    src_season: 2
+    src_ep_start: 1
+    src_ep_end: 8
+    dst_season: 1
+    dst_ep_start: 9
+    dst_ep_end: 16
+
+# ==================== 制作组 ====================
+groups:
+  - 7³ACG
+  - ADWeb
+  - ADE
+  - AnimeF@ADE
+  - AliPan
+  - Amor压制组
+  - ANK-Raws
+  - APEX
+  - Beatrice-Raws
+  - BitsTV
+  - Breeze@Sunny
+  - CtrlHD
+  - DDR
+  - Deadmau-RAWS
+  - DON
+  - EDITH
+  - EMTP-Raws
+  - EPSiLON
+  - Erai-raws
+  - FLUX
+  - FraMeSToR
+  - FRDS
+  - HDS
+  - dislike@HDsky
+  - HDsky
+  - HDCTV
+  - HDHIVE
+  - HDChina
+  - HDVideo
+  - HiveWeb
+  - HDSWEB
+  - iNT Team
+  - IrizaRaws
+  - Kagura
+  - LoliHouse
+  - Mo Cuishle
+  - Moozzi2
+  - MTeam
+  - MT
+  - MySilu
+  - Nest@ADWeb
+  - niizk
+  - NTb
+  - OurBits
+  - philosophy-raws
+  - Pure@HDSWEB
+  - DIY@HDSWEB
+  - yoyola@CHDBits
+  - Beans@CHDBits
+  - DreamRu@CHDBits
+  - KKYY@CHDBits
+  - Lee@CHDWEB
+  - CHDBits
+  - CHDWEB
+  - RLWeb
+  - SAIO-Raws
+  - SADPANDA
+  - SGNB
+  - Skymoon-Raws
+  - Snow-Raws
+  - SPARKS
+  - SubsPlease
+  - Sunny
+  - SweetSub
+  - SWTYBLZ
+  - Suzuya-Raws
+  - tG1R0
+  - TSDM
+  - TTG
+  - U2
+  - DewDream
+  - UBits
+  - UBWEB
+  - UNTOUCHED
+  - VCB-Studio
+  - WiKi
+  - Xrip
+  - YingWEB
+  - Zero-Raws
+  - ZmWeb
+  - AI-Raws
+  - AKito秋人
+  - B站小鱼儿呼唤爱
+  - B站仮面ライダーX酱
+  - BaiduBBB
+  - hchcsen
+  - hydes
+  - mawen1250
+  - Xeon晚生
+  - 一只出格君
+  - ANi
+  - APTX4869
+  - Arid
+  - Amor字幕组
+  - Breeze
+  - COKEMV
+  - DAY字幕组
+  - FSD字幕组
+  - FSD粉羽社
+  - GM-Team
+  - IMAX
+  - Kawaiika-Raws
+  - Knf
+  - MCE汉化组
+  - MingYSub
+  - NEO·QSW
+  - SilverBullet
+  - sxales
+  - VARYG
+  - WBX
+  - X酱
+  - YYQ字幕组
+  - 爱恋字幕社
+  - 白恋字幕组
+  - 百冬练习组
+  - 霸王龙压制组
+  - 半糖字幕组
+  - 波子汽水汉化组
+  - 不当舔狗制作组
+  - 擦枪字幕组
+  - 澄空学园
+  - 晨曦制作
+  - 恶魔岛字幕组
+  - 风车字幕组
+  - 风之圣殿字幕组
+  - 枫叶字幕组
+  - 幻樱字幕组
+  - 幻月字幕组
+  - 幻之字幕组
+  - 婚姻与健美字幕组
+  - 极影字幕社
+  - 极彩字幕组
+  - 康复中心字幕组
+  - 康复重症监护室字幕组
+  - 酷漫字幕组
+  - 冷番补完字幕组
+  - 离谱Sub
+  - 六四位元字幕組
+  - 漫猫字幕社
+  - 漫游字幕组
+  - 咪梦字幕组
+  - 喵萌奶茶屋
+  - 梦蓝字幕组
+  - 萌樱字幕组
+  - 魔穗字幕组
+  - 奶²
+  - 涅槃字幕组
+  - 千夏字幕组
+  - 氢气烤肉架
+  - 轻之国度字幕组
+  - 熔岩动画
+  - S1百综字幕组
+  - 生徒会字幕组
+  - 霜庭云花Sub
+  - 天香字幕社
+  - 甜饼字幕组
+  - 驯兽师联盟
+  - 豌豆字幕组
+  - 弯弯字幕组
+  - 小玩剧字幕组
+  - 星空字幕组
+  - 雪飘工作室
+  - 夜莺家族
+  - 亿次研同好会
+  - 亿万同人字幕组
+  - 异域-11番小队
+  - 银色子弹字幕组
+  - 永恒译制
+  - 悠哈璃羽字幕社
+  - 圆环记录攻略组
+  - 云歌字幕组
+  - 织梦字幕组
+  - 智械尚未危机制作
+  - 诸神字幕组
+  - Prejudice-Studio
+  - AISR
+  - 老K
+  - LGNB@oSpecialCN
+  - cXcY@FRDS
+  - 北宇治字幕组
+  - 云光字幕组
+  - 猎户发布组
+  - SW字幕组
+  - 六道是我大鸽汉化组
+  - jibaketa-粤语版
+  - ❀拨雪寻春❀
+  - 新Sub
+  - DreamHD
+  - 桜都字幕组
+  - LittleBakas!
+  - 动漫国字幕组
+  - 猫恋汉化组
+  - OPFans枫雪动漫
+  - 前伪汉化组
+  - 华盟字幕社
+  - 黑白字幕组
+  - 香子兰翻译同好会
+  - 鈴風字幕組
+  - 樱桃花字幕组
+  - 六四位元字幕组
+  - 西农YUI汉化组
+  - 神椿观测站
+  - FROGWeb
+  - 绿茶字幕组
+  - 晚街与灯
+  - 隣天使字幕组
+  - 時雨初空
+  - 三明治摆烂组
+  - 小栗帽后援会
+  - 虹作坊汉化组
+  - 极彩花梦
+  - 树屋字幕组
+  - Remux
+
+# ==================== 媒体服务 ====================
+streaming:
+  - name: Netflix
+    keywords: [Netflix, NF]
+  - name: Amazon
+    keywords: [Amazon, AMZN, "Amazon Prime"]
+  - name: Disney+
+    keywords: [Disney+, DSNP, "Disney Plus"]
+  - name: AppleTV+
+    keywords: [AppleTV+, ATVP, AppleTV]
+  - name: Bilibili
+    keywords: [Bilibili, BiliBili, B-Global]
+  - name: Crunchyroll
+    keywords: [Crunchyroll, CR]
+  - name: HBO Max
+    keywords: [MAX, HMAX, "HBO Max"]
+  - name: Hulu
+    keywords: [Hulu]
+  - name: Paramount+
+    keywords: [Paramount, PMTP, "Paramount+"]
+  - name: YouTube
+    keywords: [YouTube, YT]
+  - name: iTunes
+    keywords: [iTunes, iT]
+  - name: Abema
+    keywords: [Abema, AbemaTV]
+  - name: Bahamut
+    keywords: [Baha, Bahamut]
+  - name: CatchPlay
+    keywords: [CatchPlay, CATCHPLAY]
+  - name: friDay
+    keywords: [friDay]
+  - name: Hami
+    keywords: [Hami, "Hami Video"]
+  - name: iQIYI
+    keywords: [IQ, iQIYI]
+  - name: KKTV
+    keywords: [KKTV]
+  - name: LINE TV
+    keywords: [LINETV, "LINE TV"]
+  - name: MyTVSuper
+    keywords: [MyTVSuper]
+  - name: MyVideo
+    keywords: [MyVideo]
+  - name: TVING
+    keywords: [TVING]
+  - name: Viu
+    keywords: [Viu, ViuTV]
+  - name: playWEB
+    keywords: [playWEB]
+  - name: PMSP
+    keywords: [PMSP]
