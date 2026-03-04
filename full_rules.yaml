@@ -281,16 +281,18 @@ mp:
 # ==================== 制作组 ====================
 groups:
   - 7³ACG
-  - ADWeb
-  - ADE
-  - AnimeF@ADE
+  - name: ADWeb
+    keywords: [ADWeb, "Nest@ADWeb"]
+  - name: ADE
+    keywords: [ADE, "AnimeF@ADE"]
   - AliPan
   - Amor压制组
   - ANK-Raws
   - APEX
   - Beatrice-Raws
   - BitsTV
-  - Breeze@Sunny
+  - name: Sunny
+    keywords: [Sunny, Breeze, "Breeze@Sunny"]
   - CtrlHD
   - DDR
   - Deadmau-RAWS
@@ -298,42 +300,40 @@ groups:
   - EDITH
   - EMTP-Raws
   - EPSiLON
-  - Erai-raws
+  - name: Erai-raws
+    keywords: [Erai-raws, Erai]
   - FLUX
   - FraMeSToR
-  - FRDS
+  - name: FRDS
+    keywords: [FRDS, "cXcY@FRDS"]
   - HDS
-  - dislike@HDsky
-  - HDsky
+  - name: HDsky
+    keywords: [HDsky, "dislike@HDsky"]
   - HDCTV
   - HDHIVE
   - HDChina
   - HDVideo
   - HiveWeb
-  - HDSWEB
-  - iNT Team
+  - name: HDSWEB
+    keywords: [HDSWEB, "Pure@HDSWEB", "DIY@HDSWEB"]
+  - name: iNT
+    keywords: [iNT, "iNT Team"]
   - IrizaRaws
   - Kagura
   - LoliHouse
   - Mo Cuishle
   - Moozzi2
-  - MTeam
-  - MT
+  - name: MTeam
+    keywords: [MTeam, MT]
   - MySilu
-  - Nest@ADWeb
   - niizk
   - NTb
   - OurBits
   - philosophy-raws
-  - Pure@HDSWEB
-  - DIY@HDSWEB
-  - yoyola@CHDBits
-  - Beans@CHDBits
-  - DreamRu@CHDBits
-  - KKYY@CHDBits
-  - Lee@CHDWEB
-  - CHDBits
-  - CHDWEB
+  - name: CHDBits
+    keywords: [CHDBits, "yoyola@CHDBits", "Beans@CHDBits", "DreamRu@CHDBits", "KKYY@CHDBits"]
+  - name: CHDWEB
+    keywords: [CHDWEB, "Lee@CHDWEB"]
   - RLWeb
   - SAIO-Raws
   - SADPANDA
@@ -342,7 +342,6 @@ groups:
   - Snow-Raws
   - SPARKS
   - SubsPlease
-  - Sunny
   - SweetSub
   - SWTYBLZ
   - Suzuya-Raws
@@ -354,7 +353,8 @@ groups:
   - UBits
   - UBWEB
   - UNTOUCHED
-  - VCB-Studio
+  - name: VCB-Studio
+    keywords: [VCB-Studio, VCB]
   - WiKi
   - Xrip
   - YingWEB
@@ -374,11 +374,10 @@ groups:
   - APTX4869
   - Arid
   - Amor字幕组
-  - Breeze
   - COKEMV
   - DAY字幕组
-  - FSD字幕组
-  - FSD粉羽社
+  - name: FSD字幕组
+    keywords: [FSD字幕组, FSD粉羽社, FSD]
   - GM-Team
   - IMAX
   - Kawaiika-Raws
@@ -417,7 +416,8 @@ groups:
   - 酷漫字幕组
   - 冷番补完字幕组
   - 离谱Sub
-  - 六四位元字幕組
+  - name: 六四位元字幕组
+    keywords: [六四位元字幕組, 六四位元字幕组]
   - 漫猫字幕社
   - 漫游字幕组
   - 咪梦字幕组
@@ -457,8 +457,8 @@ groups:
   - Prejudice-Studio
   - AISR
   - 老K
-  - LGNB@oSpecialCN
-  - cXcY@FRDS
+  - name: LGNB
+    keywords: [LGNB, "LGNB@oSpecialCN"]
   - 北宇治字幕组
   - 云光字幕组
   - 猎户发布组
@@ -479,7 +479,6 @@ groups:
   - 香子兰翻译同好会
   - 鈴風字幕組
   - 樱桃花字幕组
-  - 六四位元字幕组
   - 西农YUI汉化组
   - 神椿观测站
   - FROGWeb
