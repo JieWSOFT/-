@@ -1,0 +1,180 @@
+# ============================================================================
+# MediaTidy 命名规则模板
+# ============================================================================
+#
+# 命名规则定义了整理后文件的 文件夹名 和 文件名 格式。
+# 每条规则包含 movie（电影）和 tv（剧集）两套模板。
+#
+# ============================================================================
+# 可用模板变量
+# ============================================================================
+#
+# --- 基本信息 ---
+#   {{title}}             TMDB 中文标题（如：流浪地球）
+#   {{originalTitle}}     TMDB 原始标题（如：The Wandering Earth）
+#   {{tmdbid}}            TMDB ID（如：475132）
+#   {{year}}              年份（如：2019）
+#   {{mediaType}}         媒体类型（movie / tv）
+#   {{fileExt}}           文件扩展名（如：mkv、mp4）
+#
+# --- 季集信息（仅剧集有效）---
+#   {{season}}            季号（如：1）
+#   {{season02}}          季号两位补零（如：01）
+#   {{episode}}           集号（如：5）
+#   {{episode02}}         集号两位补零（如：05）
+#   {{seasonEpisode}}     组合格式（如：S01E05）
+#
+# --- Guessit 解析字段（从文件名提取）---
+#   {{videoFormat}}       分辨率（如：2160p、1080p、720p）
+#   {{videoCodec}}        视频编码（如：HEVC、AVC、AV1）
+#   {{audioCodec}}        音频编码（如：DTS-HD MA、TrueHD、AAC）
+#   {{audioChannels}}     声道（如：7.1、5.1、2.0）
+#   {{audioProfile}}      音频特性（如：Atmos）
+#   {{source}}            片源（如：BluRay、WEB-DL、Remux）
+#   {{edition}}           版本（如：Director's Cut、Extended）
+#   {{dynamicRange}}      动态范围（如：HDR、HDR10+、DV）
+#   {{releaseGroup}}      发布组（如：FRDS、CtrlHD）
+#   {{streamingService}}  流媒体来源（如：Netflix、Disney+）
+#   {{colorDepth}}        色深（如：10bit）
+#   {{frameRate}}         帧率（如：60fps）
+#
+# --- ffprobe 探测字段（从媒体文件提取，优先级更高）---
+#   {{probeResolution}}   探测分辨率（如：2160p、1080p）
+#   {{probeCodec}}        探测视频编码（如：H.265、H.264）
+#   {{probeAudio}}        探测音频编码（如：Dolby TrueHD、DTS-HD MA）
+#   {{probeHDR}}          探测动态范围（如：Dolby Vision P8、HDR10）
+#   {{probeSubtitle}}     探测字幕（如：PGS 简体中文）
+#   {{probeColorDepth}}   探测色深（如：10-bit）
+#   {{probeFrameRate}}    探测帧率（如：24fps）
+#
+# ============================================================================
+# 模板语法说明
+# ============================================================================
+#
+#   文件夹路径用 / 分隔层级，如 {{title}} ({{year}})/Season {{season02}}
+#   缺失的变量会被替换为空字符串
+#   特殊字符 < > : " | ? * 会被自动过滤
+#
+# ============================================================================
+
+naming:
+
+  # --------------------------------------------------------------------------
+  # 推荐规则：标准 Emby/Jellyfin 命名
+  # --------------------------------------------------------------------------
+  - name: 标准命名
+    id: standard
+    movie:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]"
+      file: "{{title}} ({{year}}).{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
+      file: "{{title}} - {{seasonEpisode}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # 详细规则：带编码和片源信息
+  # --------------------------------------------------------------------------
+  - name: 详细命名
+    id: detailed
+    movie:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]"
+      file: "{{title}} ({{year}}) - {{videoFormat}} {{videoCodec}} {{source}}.{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
+      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # 完整规则：包含所有可用信息
+  # --------------------------------------------------------------------------
+  - name: 完整命名
+    id: full
+    movie:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]"
+      file: "{{title}} ({{year}}) - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{dynamicRange}} {{source}} {{releaseGroup}}.{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
+      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{dynamicRange}} {{releaseGroup}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # 原始标题规则：使用英文/原始标题
+  # --------------------------------------------------------------------------
+  - name: 原始标题命名
+    id: original-title
+    movie:
+      folder: "{{originalTitle}} ({{year}}) [tmdbid-{{tmdbid}}]"
+      file: "{{originalTitle}} ({{year}}).{{fileExt}}"
+    tv:
+      folder: "{{originalTitle}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
+      file: "{{originalTitle}} - {{seasonEpisode}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # 双语标题规则：中文标题 + 原始标题
+  # --------------------------------------------------------------------------
+  - name: 双语标题命名
+    id: bilingual
+    movie:
+      folder: "{{title}} {{originalTitle}} ({{year}}) [tmdbid-{{tmdbid}}]"
+      file: "{{title}} {{originalTitle}} ({{year}}).{{fileExt}}"
+    tv:
+      folder: "{{title}} {{originalTitle}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
+      file: "{{title}} {{originalTitle}} - {{seasonEpisode}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # Plex 风格命名
+  # --------------------------------------------------------------------------
+  - name: Plex 风格
+    id: plex
+    movie:
+      folder: "{{title}} ({{year}}) {tmdb-{{tmdbid}}}"
+      file: "{{title}} ({{year}}).{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) {tmdb-{{tmdbid}}}/Season {{season02}}"
+      file: "{{title}} - {{seasonEpisode}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # 精简规则：最小化命名
+  # --------------------------------------------------------------------------
+  - name: 精简命名
+    id: minimal
+    movie:
+      folder: "{{title}} ({{year}})"
+      file: "{{title}}.{{fileExt}}"
+    tv:
+      folder: "{{title}}/Season {{season02}}"
+      file: "{{seasonEpisode}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # 发烧友规则：保留所有技术参数
+  # --------------------------------------------------------------------------
+  - name: 发烧友命名
+    id: audiophile
+    movie:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]"
+      file: "{{title}} ({{year}}) - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{audioChannels}} {{dynamicRange}} {{colorDepth}} {{source}} {{edition}} {{releaseGroup}}.{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
+      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{audioChannels}} {{dynamicRange}} {{colorDepth}} {{releaseGroup}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # 流媒体标注规则：标注片源平台
+  # --------------------------------------------------------------------------
+  - name: 流媒体标注
+    id: streaming-tag
+    movie:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]"
+      file: "{{title}} ({{year}}) - {{videoFormat}} {{streamingService}} {{videoCodec}}.{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
+      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{streamingService}} {{videoCodec}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # ffprobe 探测规则：优先使用实际探测数据
+  # --------------------------------------------------------------------------
+  - name: 探测数据命名
+    id: probe-based
+    movie:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]"
+      file: "{{title}} ({{year}}) - {{probeResolution}} {{probeCodec}} {{probeAudio}} {{probeHDR}}.{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
+      file: "{{title}} - {{seasonEpisode}} - {{probeResolution}} {{probeCodec}} {{probeAudio}} {{probeHDR}}.{{fileExt}}"
