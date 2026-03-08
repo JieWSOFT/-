@@ -27,33 +27,33 @@ movie:
 
   # 优先级4：纪录片
   纪录片/纪录片电影/华语纪录片电影:
-    genre_ids: 99,-10402,-16
+    genre_ids: 99,!10402,!16
     original_language?: zh,cn
     origin_country?: CN,TW,HK,MO
     series_keywords: 阅兵
 
   纪录片/纪录片电影/外语纪录片电影:
-    original_language: -zh,-cn
-    genre_ids: 99,-16,-10402
+    original_language: !zh,!cn
+    genre_ids: 99,!16,!10402
 
   # 优先级5：演唱会
   演唱会/华语歌手演唱会:
-    genre_ids: 10402,-16
-    original_language?: zh,cn,-ja
-    origin_country?: CN,TW,HK,MO,-JP
+    genre_ids: 10402,!16
+    original_language?: zh,cn,!ja
+    origin_country?: CN,TW,HK,MO,!JP
     keywords: 演唱会,巡演,演出,交响乐,奇妙夜,歌剧,林忆莲,刘若英,喜乐会,音乐会,音乐剧,音乐·会,谭咏麟,摇滚,MV精选集,特别节目,美丽的呼声听证会,Live,郭富城,日本武道馆,Concert,Tour,Performance,Show,Stage,现场,現場,巡演,巡迴,巡回,演出,音乐节,音樂節,歌会,湾区升明月,音乐集,演奏,音乐秀
     series_actors: 周杰伦,林俊杰,王力宏,张韶涵,陈奕迅,张学友,孙燕姿,李宗盛
     series_keywords: 湾区升明月
 
   演唱会/日韩歌手演唱会:
-    genre_ids: 10402,-16
+    genre_ids: 10402,!16
     original_language?: ja,ko
     origin_country?: JP,KR
     keywords: Hatsune miku,演唱会,巡演,演出,交响乐,奇妙夜,酒井法子,歌剧,少女时代,喜乐会,音乐会,酒井法子,音乐剧,特别节目,摇滚,MV精选集,Live,日本武道馆,初音未来,魔法未来,Concert,米津玄师,Tour,Performance,Show,Stage,现场,現場,巡演,巡迴,巡回,演出,音乐节,音樂節,歌会,音乐集,演奏,音乐秀
     series_actors: 初音未来
 
   演唱会/欧美歌手演唱会:
-    genre_ids: 10402,-16
+    genre_ids: 10402,!16
     keywords: 演唱会,巡演,演出,交响乐,奇妙夜,歌剧,喜乐会,音乐会,音乐·会,音乐剧,特别节目,摇滚,MV精选集,Live,日本武道馆,Concert,Tour,Performance,Show,Stage,现场,現場,巡演,巡迴,巡回,演出,音乐节,音樂節,歌会,音乐集,演奏,音乐秀,音乐盛宴
     series_keywords: 维也纳新年音乐会
 
@@ -83,7 +83,7 @@ movie:
     series_directors: 冯小刚,王家卫,张艺谋
 
   电影/日本电影:
-    origin_country?: JP,-US
+    origin_country?: JP,!US
     original_language?: ja
 
   电影/韩国电影:
@@ -94,8 +94,8 @@ movie:
     original_language: id,th,ms,tl,vi
 
   电影/印度电影:
-    keywords: -战马
-    origin_country?: IN,-CN
+    keywords: !战马
+    origin_country?: IN,!CN
     original_language?: hi,ta,te,kn,mr,gu,pa
 
   电影/欧美电影/名家系列:
@@ -130,23 +130,23 @@ tv:
 
   # 优先级4：纪录片
   纪录片/纪录片剧集/华语纪录片:
-    genre_ids: 99,-10402,-16
+    genre_ids: 99,!10402,!16
     original_language?: zh,cn,bo,za
     origin_country?: CN,TW,HK,MO
 
   纪录片/纪录片剧集/外语纪录片:
-    genre_ids: 99,-10402,-16
+    genre_ids: 99,!10402,!16
 
   # 优先级5：动漫
   儿童/儿童动画片:
-    genre_ids: +16,10762
-    keywords: -数码宝贝,-名侦探柯南,-蜡笔小新,-宝可梦,-哆啦A梦
+    genre_ids: &16,10762
+    keywords: !数码宝贝,!名侦探柯南,!蜡笔小新,!宝可梦,!哆啦A梦
     series_keywords: 喜羊羊,好奇世界,猫和老鼠,蓝猫淘气三千问,宝宝巴士,熊出没,猪猪侠
 
   动漫/国漫:
     genre_ids: 16
     origin_country: CN,TW,HK,MO
-    keywords: -名侦探柯南
+    keywords: !名侦探柯南
 
   动漫/日番:
     genre_ids: 16
@@ -162,7 +162,7 @@ tv:
 
   剧集/国产剧集:
     original_language: zh,cn
-    -origin_country: HK
+    !origin_country: HK
     origin_country: CN
 
   剧集/港台剧集:
