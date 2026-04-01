@@ -81,7 +81,7 @@ naming:
       file: "{{title}} ({{year}}) - {{videoFormat}} {{videoCodec}} {{source}}.{{fileExt}}"
     tv:
       folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
-      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}}.{{fileExt}}"
+      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}} {{source}}.{{fileExt}}"
 
   # --------------------------------------------------------------------------
   # 完整规则：包含所有可用信息
@@ -90,10 +90,10 @@ naming:
     id: full
     movie:
       folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]"
-      file: "{{title}} ({{year}}) - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{dynamicRange}} {{source}} {{releaseGroup}}.{{fileExt}}"
+      file: "{{title}} ({{year}}) - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{dynamicRange}} {{source}} {{edition}} {{releaseGroup}}.{{fileExt}}"
     tv:
       folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
-      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{dynamicRange}} {{releaseGroup}}.{{fileExt}}"
+      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{dynamicRange}} {{source}} {{edition}} {{releaseGroup}}.{{fileExt}}"
 
   # --------------------------------------------------------------------------
   # 原始标题规则：使用英文/原始标题
@@ -153,7 +153,7 @@ naming:
       file: "{{title}} ({{year}}) - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{audioChannels}} {{dynamicRange}} {{colorDepth}} {{source}} {{edition}} {{releaseGroup}}.{{fileExt}}"
     tv:
       folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
-      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{audioChannels}} {{dynamicRange}} {{colorDepth}} {{releaseGroup}}.{{fileExt}}"
+      file: "{{title}} - {{seasonEpisode}} - {{videoFormat}} {{videoCodec}} {{audioCodec}} {{audioChannels}} {{dynamicRange}} {{colorDepth}} {{source}} {{edition}} {{releaseGroup}}.{{fileExt}}"
 
   # --------------------------------------------------------------------------
   # 流媒体标注规则：标注片源平台
