@@ -566,3 +566,179 @@ quality:
       resolutions: []
       codecs: []
       hdr_types: []
+
+  # --------------------------------------------------------------------------
+  # 多版本：维度自动分槽（按分辨率+HDR自动保留多版本）
+  # --------------------------------------------------------------------------
+  - name: 多版本均衡
+    id: multi-balanced
+    version:
+      enabled: true
+      dimensions: [resolution, hdr]
+      max_versions: 3
+    scoring:
+      resolution:
+        enabled: true
+        weight: 25
+        priority:
+          - 2160p
+          - 1080p
+          - 720p
+          - 480p
+      source:
+        enabled: true
+        weight: 20
+        priority:
+          - Remux
+          - BluRay
+          - WEB-DL
+          - WEBRip
+          - HDTV
+      video_codec:
+        enabled: true
+        weight: 15
+        priority:
+          - H.265
+          - AV1
+          - H.264
+          - VP9
+      audio_codec:
+        enabled: true
+        weight: 15
+        priority:
+          - Dolby TrueHD
+          - DTS-HD MA
+          - Dolby Digital Plus
+          - DTS
+          - Dolby Digital
+          - AAC
+      hdr:
+        enabled: true
+        weight: 10
+        priority:
+          - Dolby Vision
+          - HDR Vivid
+          - HDR10+
+          - HDR10
+          - HLG
+          - SDR
+      color_depth:
+        enabled: false
+        weight: 0
+        priority: []
+      frame_rate:
+        enabled: false
+        weight: 0
+        priority: []
+      subtitle:
+        enabled: false
+        weight: 0
+        priority: []
+      file_extension:
+        enabled: true
+        weight: 3
+        priority:
+          - mkv
+          - mp4
+      file_size:
+        enabled: true
+        weight: 2
+    exclude:
+      resolutions: []
+      codecs: []
+      hdr_types: []
+
+  # --------------------------------------------------------------------------
+  # 多版本：显式槽位（精选 4K DV + 4K HDR + 1080p 三个版本）
+  # --------------------------------------------------------------------------
+  - name: 多版本精选
+    id: multi-curated
+    version:
+      enabled: true
+      slots:
+        - name: 4K DV
+          match:
+            resolution: [2160p]
+            hdr: [Dolby Vision]
+        - name: 4K HDR
+          match:
+            resolution: [2160p]
+            hdr: [HDR10+, HDR10]
+        - name: 1080p SDR
+          match:
+            resolution: [1080p]
+            hdr: [SDR]
+      unmatched: skip
+    scoring:
+      resolution:
+        enabled: true
+        weight: 20
+        priority:
+          - 2160p
+          - 1080p
+          - 720p
+      source:
+        enabled: true
+        weight: 25
+        priority:
+          - Remux
+          - BluRay
+          - WEB-DL
+          - WEBRip
+      video_codec:
+        enabled: true
+        weight: 15
+        priority:
+          - H.265
+          - AV1
+          - H.264
+      audio_codec:
+        enabled: true
+        weight: 15
+        priority:
+          - Dolby TrueHD Atmos
+          - Dolby TrueHD
+          - DTS-HD MA
+          - DTS:X
+          - Dolby Digital Plus
+          - DTS
+          - AAC
+      hdr:
+        enabled: true
+        weight: 10
+        priority:
+          - Dolby Vision
+          - HDR Vivid
+          - HDR10+
+          - HDR10
+          - SDR
+      color_depth:
+        enabled: true
+        weight: 3
+        priority:
+          - 12-bit
+          - 10-bit
+          - 8-bit
+      frame_rate:
+        enabled: false
+        weight: 0
+        priority: []
+      subtitle:
+        enabled: false
+        weight: 0
+        priority: []
+      file_extension:
+        enabled: true
+        weight: 2
+        priority:
+          - mkv
+          - mp4
+      file_size:
+        enabled: true
+        weight: 2
+    exclude:
+      resolutions:
+        - 480p
+      codecs:
+        - MPEG-2
+      hdr_types: []
