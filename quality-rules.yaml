@@ -15,23 +15,45 @@
 #   例如 priority: [2160p, 1080p, 720p]
 #        2160p → 最高分，1080p → 次高分，720p → 最低分
 #
-# file_size 维度特殊：无 priority 列表，使用 log2(文件大小MB) 公式计算
-#   文件越大得分越高（偏好高码率版本）
+# file_size / bitrate 维度特殊：无 priority 列表，使用对数公式计算
+#   file_size：文件越大得分越高（~50GB 饱和）
+#   bitrate：码率越高得分越高（~100Mbps 饱和）
 #
 # ============================================================================
 # 评分维度说明
 # ============================================================================
 #
-#   resolution      分辨率（2160p > 1080p > 720p > ...）
-#   source          片源类型（Remux > BluRay > WEB-DL > ...）
-#   video_codec     视频编码（H.265 > H.264 > AV1 > ...）
-#   audio_codec     音频编码（Dolby TrueHD > DTS-HD MA > ...）
-#   hdr             动态范围（Dolby Vision > HDR Vivid > HDR10+ > HDR10 > ...）
-#   color_depth     色深（12-bit > 10-bit > 8-bit）
-#   frame_rate      帧率（60fps > 30fps > 24fps）
-#   subtitle        字幕（优先有中文字幕的版本）
-#   file_extension  容器格式（mkv > mp4 > avi > ...）
-#   file_size       文件大小（越大越好，使用对数公式）
+#   resolution      分辨率（4320p > 2160p > 1080p > ...）
+#   source          片源类型（Remux+UHD BluRay > ... > Unknown > ...）
+#                   ⚠ Remux 必须使用组合格式：Remux+UHD BluRay / Remux+BluRay / Remux+BD
+#                   ⚠ 无法识别来源的文件会映射为 Unknown
+#   video_codec     视频编码（AV1 > H.265 > H.264 > ...）
+#   audio_codec     音频编码（DTS:X > TrueHD Dolby Atmos > DTS-HD MA > ...）
+#                   ⚠ 音频名称必须与 ffprobe 输出一致（见下方列表）
+#   hdr             动态范围（Dolby Vision P7 > P8 > P5 > HDR10+ > HDR10 > ...）
+#   color_depth     色深（12-bit > 10-bit > 8-bit）— 需 ffprobe
+#   frame_rate      帧率（120fps > 60fps > 30fps > ...）— 需 ffprobe
+#   subtitle        字幕（PGS 简体中文 > ASS > SRT > ...）— 需 ffprobe
+#   file_extension  容器格式（mkv > mp4 > ts > ...）
+#   file_size       文件大小（越大越好，对数公式）
+#   bitrate         码率（越高越好，对数公式）— 需 ffprobe
+#
+# ============================================================================
+# 音频编码标准名称（ffprobe 输出）
+# ============================================================================
+#
+#   DTS:X                       对象式 DTS
+#   TrueHD Dolby Atmos 7.1      Atmos TrueHD（7.1/5.1 等）
+#   DTS-HD MA 7.1 / 5.1         DTS 无损（带声道）
+#   Dolby TrueHD                TrueHD 无 Atmos
+#   DTS-HD                      DTS-HD（非 MA）
+#   Dolby Digital Plus Atmos    EAC3 Atmos
+#   Dolby Digital Plus          EAC3
+#   DTS                         标准 DTS
+#   Dolby Digital               AC3
+#   FLAC                        无损 FLAC
+#   AAC                         AAC
+#   MP3 / Opus / PCM            其他
 #
 # ============================================================================
 # 排除规则说明
@@ -47,7 +69,8 @@
 #
 #   source_extract_metadata: true   对源文件执行 ffprobe 探测
 #   dest_extract_metadata: true     对目标文件执行 ffprobe 探测
-#   探测可获取更精确的编码、音频、字幕信息，但会增加处理时间
+#   探测可获取更精确的编码、音频、字幕、码率信息，但会增加处理时间
+#   ⚠ bitrate / color_depth / frame_rate / subtitle 维度需要 ffprobe 才能获取数据
 #
 # ============================================================================
 
@@ -55,6 +78,7 @@ quality:
 
   # --------------------------------------------------------------------------
   # 推荐规则：均衡评分（适合大多数用户）
+  # 不开 ffprobe，仅靠文件名解析 + 文件大小，速度最快
   # --------------------------------------------------------------------------
   - name: 均衡评分
     id: balanced
@@ -63,228 +87,289 @@ quality:
     scoring:
       resolution:
         enabled: true
-        weight: 30
-        priority:
-          - 2160p
-          - 1080p
-          - 720p
-          - 480p
-      source:
-        enabled: true
         weight: 25
         priority:
-          - Remux
+          - 4320p
+          - 2160p
+          - 1080p
+          - 1080i
+          - 720p
+          - 576p
+          - 480p
+          - 360p
+      source:
+        enabled: true
+        weight: 10
+        priority:
+          - Remux+UHD BluRay
+          - Remux+BluRay
+          - Remux+BD
+          - UHD BluRay
           - BluRay
           - WEB-DL
           - WEBRip
+          - WEB
+          - Unknown
           - HDTV
           - DVDRip
+          - DVD
           - SDTV
+          - CAM
       video_codec:
         enabled: true
-        weight: 15
+        weight: 10
         priority:
-          - H.265
           - AV1
+          - H.265
           - H.264
           - VP9
           - MPEG-4
           - MPEG-2
+          - Xvid
+          - DivX
       audio_codec:
         enabled: true
-        weight: 15
+        weight: 10
         priority:
-          - Dolby TrueHD
+          - DTS:X
+          - TrueHD Dolby Atmos
           - DTS-HD MA
+          - Dolby TrueHD
+          - DTS-HD
           - Dolby Digital Plus
           - DTS
           - Dolby Digital
+          - FLAC
           - AAC
           - MP3
       hdr:
         enabled: true
-        weight: 10
+        weight: 8
         priority:
+          - Dolby Vision P7
+          - Dolby Vision P8
+          - Dolby Vision P5
           - Dolby Vision
-          - HDR Vivid
           - HDR10+
           - HDR10
           - HLG
+          - HDR
           - SDR
       color_depth:
         enabled: false
         weight: 0
-        priority:
-          - 12-bit
-          - 10-bit
-          - 8-bit
+        priority: [12-bit, 10-bit, 8-bit]
       frame_rate:
         enabled: false
         weight: 0
-        priority:
-          - 120fps
-          - 60fps
-          - 30fps
-          - 24fps
+        priority: [120fps, 60fps, 30fps, 25fps, 24fps]
       subtitle:
         enabled: false
         weight: 0
         priority: []
       file_extension:
         enabled: true
-        weight: 3
+        weight: 2
         priority:
           - mkv
           - mp4
-          - avi
-          - wmv
           - ts
+          - m2ts
+          - avi
       file_size:
         enabled: true
-        weight: 2
+        weight: 10
+      bitrate:
+        enabled: false
+        weight: 0
     exclude:
       resolutions: []
       codecs: []
       hdr_types: []
 
   # --------------------------------------------------------------------------
-  # 画质优先规则：偏好高分辨率 + HDR
+  # 画质优先规则：偏好高分辨率 + 高码率 + HDR
+  # 开启 ffprobe 探测以获取精确码率和 HDR Profile
   # --------------------------------------------------------------------------
   - name: 画质优先
     id: quality-first
-    source_extract_metadata: false
-    dest_extract_metadata: false
+    source_extract_metadata: true
+    dest_extract_metadata: true
     scoring:
       resolution:
         enabled: true
-        weight: 40
+        weight: 30
         priority:
+          - 4320p
           - 2160p
           - 1080p
+          - 1080i
           - 720p
           - 480p
       source:
         enabled: true
-        weight: 20
+        weight: 5
         priority:
-          - Remux
+          - Remux+UHD BluRay
+          - Remux+BluRay
+          - Remux+BD
+          - UHD BluRay
           - BluRay
           - WEB-DL
           - WEBRip
+          - WEB
+          - Unknown
           - HDTV
+          - DVDRip
+          - DVD
+          - CAM
       video_codec:
         enabled: true
-        weight: 10
+        weight: 8
         priority:
-          - H.265
           - AV1
+          - H.265
           - H.264
           - VP9
       audio_codec:
         enabled: true
         weight: 5
         priority:
-          - Dolby TrueHD
+          - DTS:X
+          - TrueHD Dolby Atmos
           - DTS-HD MA
+          - Dolby TrueHD
+          - DTS-HD
+          - Dolby Digital Plus Atmos
           - Dolby Digital Plus
           - DTS
+          - Dolby Digital
+          - FLAC
           - AAC
+          - MP3
       hdr:
         enabled: true
-        weight: 20
+        weight: 15
         priority:
+          - Dolby Vision P7
+          - Dolby Vision P8
+          - Dolby Vision P5
           - Dolby Vision
-          - HDR Vivid
           - HDR10+
           - HDR10
           - HLG
+          - HDR
           - SDR
       color_depth:
         enabled: true
         weight: 3
-        priority:
-          - 12-bit
-          - 10-bit
-          - 8-bit
+        priority: [12-bit, 10-bit, 8-bit]
       frame_rate:
         enabled: true
         weight: 2
-        priority:
-          - 120fps
-          - 60fps
-          - 30fps
-          - 24fps
+        priority: [120fps, 60fps, 30fps, 25fps, 24fps]
       subtitle:
         enabled: false
         weight: 0
         priority: []
       file_extension:
-        enabled: false
-        weight: 0
-        priority: []
+        enabled: true
+        weight: 2
+        priority: [mkv, mp4, ts, m2ts]
       file_size:
-        enabled: false
-        weight: 0
+        enabled: true
+        weight: 10
+      bitrate:
+        enabled: true
+        weight: 20
     exclude:
       resolutions:
         - 480p
+        - 360p
       codecs:
         - MPEG-2
         - MPEG-4
+        - Xvid
+        - DivX
       hdr_types: []
 
   # --------------------------------------------------------------------------
   # 音质优先规则：偏好无损音轨
+  # 开启双向 ffprobe 以精确检测音频编码和声道
   # --------------------------------------------------------------------------
   - name: 音质优先
     id: audio-first
     source_extract_metadata: true
-    dest_extract_metadata: false
+    dest_extract_metadata: true
     scoring:
       resolution:
         enabled: true
-        weight: 15
+        weight: 12
         priority:
+          - 4320p
           - 2160p
           - 1080p
+          - 1080i
           - 720p
+          - 480p
       source:
         enabled: true
-        weight: 20
+        weight: 8
         priority:
-          - Remux
+          - Remux+UHD BluRay
+          - Remux+BluRay
+          - Remux+BD
+          - UHD BluRay
           - BluRay
           - WEB-DL
           - WEBRip
+          - WEB
+          - Unknown
+          - HDTV
+          - DVDRip
+          - DVD
+          - CAM
       video_codec:
         enabled: true
-        weight: 10
+        weight: 8
         priority:
-          - H.265
           - AV1
+          - H.265
           - H.264
+          - VP9
       audio_codec:
         enabled: true
         weight: 35
         priority:
-          - Dolby TrueHD Atmos
-          - Dolby TrueHD
-          - DTS-HD MA
           - DTS:X
+          - TrueHD Dolby Atmos 7.1
+          - TrueHD Dolby Atmos 5.1
+          - TrueHD Dolby Atmos
+          - DTS-HD MA 7.1
+          - DTS-HD MA 5.1
+          - DTS-HD MA
+          - Dolby TrueHD
+          - DTS-HD
           - Dolby Digital Plus Atmos
           - Dolby Digital Plus
           - DTS
           - Dolby Digital
+          - FLAC
           - AAC
+          - Opus
           - MP3
       hdr:
         enabled: true
         weight: 5
         priority:
+          - Dolby Vision P7
+          - Dolby Vision P8
+          - Dolby Vision P5
           - Dolby Vision
-          - HDR Vivid
           - HDR10+
           - HDR10
+          - HLG
+          - HDR
           - SDR
       color_depth:
         enabled: false
@@ -296,24 +381,30 @@ quality:
         priority: []
       subtitle:
         enabled: true
-        weight: 10
+        weight: 8
         priority:
-          - PGS 简体中文
+          - PGS 简英特效
           - ASS 简中特效
+          - PGS 简体中文
+          - ASS 简体中文
           - SRT 简体中文
           - PGS 繁体中文
           - SRT 繁体中文
           - PGS English
           - SRT English
+          - PGS
+          - ASS
+          - SRT
       file_extension:
         enabled: true
-        weight: 3
-        priority:
-          - mkv
-          - mp4
+        weight: 2
+        priority: [mkv, mp4]
       file_size:
         enabled: true
-        weight: 2
+        weight: 5
+      bitrate:
+        enabled: true
+        weight: 8
     exclude:
       resolutions: []
       codecs: []
@@ -321,6 +412,7 @@ quality:
 
   # --------------------------------------------------------------------------
   # 容量优先规则：偏好体积小但质量可接受的版本
+  # 文件大小和码率使用负权重（越大扣分越多），编码效率使用正权重
   # --------------------------------------------------------------------------
   - name: 容量优先
     id: size-first
@@ -337,13 +429,21 @@ quality:
           - 480p
       source:
         enabled: true
-        weight: 25
+        weight: 15
         priority:
           - WEB-DL
           - WEBRip
+          - WEB
+          - Unknown
           - BluRay
           - HDTV
-          - Remux
+          - UHD BluRay
+          - DVDRip
+          - DVD
+          - Remux+BluRay
+          - Remux+UHD BluRay
+          - Remux+BD
+          - CAM
       video_codec:
         enabled: true
         weight: 25
@@ -352,16 +452,23 @@ quality:
           - H.265
           - VP9
           - H.264
+          - MPEG-4
       audio_codec:
         enabled: true
-        weight: 15
+        weight: 10
         priority:
           - AAC
+          - Opus
           - Dolby Digital Plus
           - Dolby Digital
           - DTS
-          - DTS-HD MA
+          - FLAC
+          - DTS-HD
           - Dolby TrueHD
+          - DTS-HD MA
+          - TrueHD Dolby Atmos
+          - DTS:X
+          - MP3
       hdr:
         enabled: false
         weight: 0
@@ -384,17 +491,24 @@ quality:
         priority:
           - mp4
           - mkv
+          - ts
       file_size:
         enabled: true
         weight: -10
+      bitrate:
+        enabled: false
+        weight: 0
     exclude:
       resolutions: []
       codecs:
         - MPEG-2
+        - Xvid
+        - DivX
       hdr_types: []
 
   # --------------------------------------------------------------------------
   # Remux 收藏规则：只保留最高质量的 Remux 版本
+  # Source 权重最高，确保 Remux 始终优先于重编码版本
   # --------------------------------------------------------------------------
   - name: Remux 收藏
     id: remux-collector
@@ -403,47 +517,63 @@ quality:
     scoring:
       resolution:
         enabled: true
-        weight: 30
+        weight: 25
         priority:
+          - 4320p
           - 2160p
           - 1080p
       source:
         enabled: true
-        weight: 30
+        weight: 25
         priority:
-          - Remux
+          - Remux+UHD BluRay
+          - Remux+BluRay
+          - Remux+BD
+          - UHD BluRay
           - BluRay
+          - Unknown
       video_codec:
         enabled: true
-        weight: 10
+        weight: 8
         priority:
-          - H.265
           - AV1
+          - H.265
           - H.264
       audio_codec:
         enabled: true
-        weight: 10
+        weight: 12
         priority:
-          - Dolby TrueHD Atmos
-          - Dolby TrueHD
-          - DTS-HD MA
           - DTS:X
+          - TrueHD Dolby Atmos 7.1
+          - TrueHD Dolby Atmos 5.1
+          - TrueHD Dolby Atmos
+          - DTS-HD MA 7.1
+          - DTS-HD MA 5.1
+          - DTS-HD MA
+          - Dolby TrueHD
+          - DTS-HD
+          - Dolby Digital Plus
+          - DTS
+          - Dolby Digital
+          - FLAC
+          - PCM
       hdr:
         enabled: true
         weight: 15
         priority:
+          - Dolby Vision P7
+          - Dolby Vision P8
+          - Dolby Vision P5
           - Dolby Vision
-          - HDR Vivid
           - HDR10+
           - HDR10
+          - HLG
+          - HDR
           - SDR
       color_depth:
         enabled: true
         weight: 3
-        priority:
-          - 12-bit
-          - 10-bit
-          - 8-bit
+        priority: [12-bit, 10-bit, 8-bit]
       frame_rate:
         enabled: false
         weight: 0
@@ -455,23 +585,29 @@ quality:
       file_extension:
         enabled: true
         weight: 2
-        priority:
-          - mkv
+        priority: [mkv]
       file_size:
-        enabled: false
-        weight: 0
+        enabled: true
+        weight: 5
+      bitrate:
+        enabled: true
+        weight: 8
     exclude:
       resolutions:
         - 720p
         - 480p
+        - 360p
       codecs:
         - MPEG-2
         - MPEG-4
         - VP9
+        - Xvid
+        - DivX
       hdr_types: []
 
   # --------------------------------------------------------------------------
   # 全维度探测规则：使用 ffprobe 精确评分
+  # 开启所有维度，最全面但最慢（需双向 ffprobe）
   # --------------------------------------------------------------------------
   - name: 全维度探测
     id: full-probe
@@ -480,88 +616,113 @@ quality:
     scoring:
       resolution:
         enabled: true
-        weight: 25
+        weight: 18
         priority:
+          - 4320p
           - 2160p
           - 1080p
+          - 1080i
           - 720p
+          - 576p
           - 480p
+          - 360p
       source:
         enabled: true
-        weight: 20
+        weight: 5
         priority:
-          - Remux
+          - Remux+UHD BluRay
+          - Remux+BluRay
+          - Remux+BD
+          - UHD BluRay
           - BluRay
           - WEB-DL
           - WEBRip
+          - WEB
+          - Unknown
           - HDTV
+          - DVDRip
+          - DVD
+          - CAM
       video_codec:
         enabled: true
-        weight: 12
+        weight: 10
         priority:
-          - H.265
           - AV1
+          - H.265
           - H.264
           - VP9
+          - MPEG-2
+          - Xvid
+          - DivX
       audio_codec:
         enabled: true
-        weight: 12
+        weight: 10
         priority:
-          - Dolby TrueHD Atmos
-          - Dolby TrueHD
-          - DTS-HD MA
           - DTS:X
+          - TrueHD Dolby Atmos 7.1
+          - TrueHD Dolby Atmos 5.1
+          - TrueHD Dolby Atmos
+          - DTS-HD MA 7.1
+          - DTS-HD MA 5.1
+          - DTS-HD MA
+          - Dolby TrueHD
+          - DTS-HD
           - Dolby Digital Plus Atmos
           - Dolby Digital Plus
           - DTS
           - Dolby Digital
+          - FLAC
           - AAC
+          - Opus
+          - MP3
+          - PCM
       hdr:
         enabled: true
         weight: 10
         priority:
+          - Dolby Vision P7
+          - Dolby Vision P8
+          - Dolby Vision P5
           - Dolby Vision
-          - HDR Vivid
           - HDR10+
           - HDR10
           - HLG
+          - HDR
           - SDR
       color_depth:
         enabled: true
         weight: 5
-        priority:
-          - 12-bit
-          - 10-bit
-          - 8-bit
+        priority: [12-bit, 10-bit, 8-bit]
       frame_rate:
         enabled: true
         weight: 3
-        priority:
-          - 120fps
-          - 60fps
-          - 30fps
-          - 24fps
+        priority: [120fps, 60fps, 30fps, 25fps, 24fps]
       subtitle:
         enabled: true
         weight: 8
         priority:
-          - PGS 简体中文
+          - PGS 简英特效
           - ASS 简中特效
+          - PGS 简体中文
+          - ASS 简体中文
           - SRT 简体中文
           - PGS 繁体中文
           - SRT 繁体中文
           - PGS English
           - SRT English
+          - PGS
+          - ASS
+          - SRT
       file_extension:
         enabled: true
-        weight: 3
-        priority:
-          - mkv
-          - mp4
-          - avi
+        weight: 2
+        priority: [mkv, mp4, ts, m2ts, avi]
       file_size:
         enabled: true
-        weight: 2
+        weight: 8
+      bitrate:
+        enabled: true
+        weight: 12
     exclude:
       resolutions: []
       codecs: []
@@ -569,6 +730,7 @@ quality:
 
   # --------------------------------------------------------------------------
   # 多版本：维度自动分槽（按分辨率+HDR自动保留多版本）
+  # 每个槽位内按评分选最优版本
   # --------------------------------------------------------------------------
   - name: 多版本均衡
     id: multi-balanced
@@ -579,48 +741,66 @@ quality:
     scoring:
       resolution:
         enabled: true
-        weight: 25
+        weight: 20
         priority:
+          - 4320p
           - 2160p
           - 1080p
+          - 1080i
           - 720p
           - 480p
       source:
         enabled: true
-        weight: 20
+        weight: 10
         priority:
-          - Remux
+          - Remux+UHD BluRay
+          - Remux+BluRay
+          - Remux+BD
+          - UHD BluRay
           - BluRay
           - WEB-DL
           - WEBRip
+          - WEB
+          - Unknown
           - HDTV
+          - DVDRip
+          - DVD
+          - CAM
       video_codec:
         enabled: true
-        weight: 15
+        weight: 10
         priority:
-          - H.265
           - AV1
+          - H.265
           - H.264
           - VP9
       audio_codec:
         enabled: true
-        weight: 15
+        weight: 10
         priority:
-          - Dolby TrueHD
+          - DTS:X
+          - TrueHD Dolby Atmos
           - DTS-HD MA
+          - Dolby TrueHD
+          - DTS-HD
           - Dolby Digital Plus
           - DTS
           - Dolby Digital
+          - FLAC
           - AAC
+          - MP3
       hdr:
         enabled: true
-        weight: 10
+        weight: 8
         priority:
+          - Dolby Vision P7
+          - Dolby Vision P8
+          - Dolby Vision P5
           - Dolby Vision
-          - HDR Vivid
           - HDR10+
           - HDR10
           - HLG
+          - HDR
           - SDR
       color_depth:
         enabled: false
@@ -636,13 +816,14 @@ quality:
         priority: []
       file_extension:
         enabled: true
-        weight: 3
-        priority:
-          - mkv
-          - mp4
+        weight: 2
+        priority: [mkv, mp4, ts, m2ts]
       file_size:
         enabled: true
-        weight: 2
+        weight: 10
+      bitrate:
+        enabled: false
+        weight: 0
     exclude:
       resolutions: []
       codecs: []
@@ -650,6 +831,7 @@ quality:
 
   # --------------------------------------------------------------------------
   # 多版本：显式槽位（精选 4K DV + 4K HDR + 1080p 三个版本）
+  # 每个槽位匹配特定分辨率+HDR组合，槽位内按评分选最优
   # --------------------------------------------------------------------------
   - name: 多版本精选
     id: multi-curated
@@ -659,7 +841,7 @@ quality:
         - name: 4K DV
           match:
             resolution: [2160p]
-            hdr: [Dolby Vision]
+            hdr: [Dolby Vision, Dolby Vision P7, Dolby Vision P8, Dolby Vision P5]
         - name: 4K HDR
           match:
             resolution: [2160p]
@@ -672,53 +854,70 @@ quality:
     scoring:
       resolution:
         enabled: true
-        weight: 20
+        weight: 15
         priority:
+          - 4320p
           - 2160p
           - 1080p
           - 720p
       source:
         enabled: true
-        weight: 25
+        weight: 10
         priority:
-          - Remux
+          - Remux+UHD BluRay
+          - Remux+BluRay
+          - Remux+BD
+          - UHD BluRay
           - BluRay
           - WEB-DL
           - WEBRip
+          - WEB
+          - Unknown
+          - HDTV
+          - DVDRip
+          - DVD
+          - CAM
       video_codec:
         enabled: true
-        weight: 15
+        weight: 10
         priority:
-          - H.265
           - AV1
+          - H.265
           - H.264
+          - VP9
       audio_codec:
         enabled: true
-        weight: 15
+        weight: 12
         priority:
-          - Dolby TrueHD Atmos
-          - Dolby TrueHD
-          - DTS-HD MA
           - DTS:X
+          - TrueHD Dolby Atmos
+          - DTS-HD MA
+          - Dolby TrueHD
+          - DTS-HD
+          - Dolby Digital Plus Atmos
           - Dolby Digital Plus
           - DTS
+          - Dolby Digital
+          - FLAC
           - AAC
+          - MP3
       hdr:
         enabled: true
         weight: 10
         priority:
+          - Dolby Vision P7
+          - Dolby Vision P8
+          - Dolby Vision P5
           - Dolby Vision
-          - HDR Vivid
           - HDR10+
           - HDR10
+          - HLG
+          - HDR
           - SDR
       color_depth:
         enabled: true
         weight: 3
-        priority:
-          - 12-bit
-          - 10-bit
-          - 8-bit
+        priority: [12-bit, 10-bit, 8-bit]
       frame_rate:
         enabled: false
         weight: 0
@@ -730,15 +929,19 @@ quality:
       file_extension:
         enabled: true
         weight: 2
-        priority:
-          - mkv
-          - mp4
+        priority: [mkv, mp4]
       file_size:
         enabled: true
-        weight: 2
+        weight: 10
+      bitrate:
+        enabled: false
+        weight: 0
     exclude:
       resolutions:
         - 480p
+        - 360p
       codecs:
         - MPEG-2
+        - Xvid
+        - DivX
       hdr_types: []
