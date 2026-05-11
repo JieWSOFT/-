@@ -1,0 +1,21 @@
+tmdb_override:
+  - tmdb_id: 12345
+    media_type: movie
+    title: "自定义标题"
+    original_title: "Original Title"
+    year: 2024
+    overview: "简介..."
+    genres:
+      - id: 18
+        name: "剧情"
+    runtime: 120
+    status: "Released"
+    imdb_id: "tt1234567"
+    original_language: zh
+
+  - tmdb_id: 67890
+    media_type: tv
+    title: "剧集名"
+    origin_country:
+      - CN
+      - HK
