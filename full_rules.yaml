@@ -277,6 +277,21 @@ mp:
   - tmdb: 84111
     from: { season: 2, ep: [1, 8] }
     to:   { season: 1, ep: [9, 16] }
+  # 逆天邪神
+  - tmdb: 235643
+    from: { season: 2, ep: [1, 20] }
+    to: { season: 1, ep: [31, 50] }
+  # 爱的浪漫旅行
+  - tmdb: 97199
+    from: { season: 7, ep: [1, 14] }
+    to_tmdb: 239038
+    to: { season: 1, ep: [1, 14] }
+  - tmdb: 97199
+    from: { season: 8, ep: [1, 13] }
+    to: { season: 7, ep: [1, 13] }
+  - tmdb: 97199
+    from: { season: 9, ep: [1, 10] }
+    to: { season: 8, ep: [1, 10] }
 
 # ==================== 制作组 ====================
 groups:
