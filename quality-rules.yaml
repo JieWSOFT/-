@@ -948,8 +948,8 @@ quality:
   # --------------------------------------------------------------------------
   #季佬：画质优先,杜比优先，开启码率，字幕ff对比
   # --------------------------------------------------------------------------
-    - name: 寂寞-github
-    id: quality-jimo-github
+    - name: 寂寞github
+    id: quality-jimogithub
     source_extract_metadata: true
     dest_extract_metadata: true
     scoring:
@@ -1002,8 +1002,8 @@ quality:
   # --------------------------------------------------------------------------
   #本地strm洗版：画质优先,杜比优先，开启码率(必须重命名也要支持)，关闭字幕，ff探测对比
   # --------------------------------------------------------------------------
-  - name: 本地strm-github
-    id: quality-strm-github
+  - name: 本地strmgithub
+    id: quality-strmgithub
     source_extract_metadata: false
     dest_extract_metadata: false
     scoring:
