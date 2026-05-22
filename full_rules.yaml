@@ -281,7 +281,7 @@ mp:
   - tmdb: 235643
     from: { season: 2, ep: [1, 20] }
     to: { season: 1, ep: [31, 50] }
-  # 爱的浪漫旅行
+  # 妻子的浪漫旅行
   - tmdb: 97199
     from: { season: 7, ep: [1, 14] }
     to_tmdb: 239038
@@ -292,6 +292,12 @@ mp:
   - tmdb: 97199
     from: { season: 9, ep: [1, 10] }
     to: { season: 8, ep: [1, 10] }
+  # 搜神记  
+  - tmdb: 317329
+    from: { season: 1, ep: [1, 24] }
+    to_tmdb: 233291
+    to: { season: 1, ep: [1, 24] }  
+  
 
 # ==================== 制作组 ====================
 groups:
