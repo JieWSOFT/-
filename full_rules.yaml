@@ -130,6 +130,13 @@ mr:
   - pattern: "NewDoraemon哆啦A梦新番\\[(\\d+)\\]"
     bind: { tmdb: 65733, media: tv, season: 1, episode: "$1" }
 
+  # --- 宇宙啦啦队tmdbid绑定 ---
+  - pattern: "(?i)宇宙啦啦队.*S(\\d+)"
+    bind:
+      tmdb: 316099
+      media: tv
+      season: 1  
+
   # --- 无效发布组标签清理 ---
   - pattern: "-SC(?=[\\W_]|$)"
     action: remove
@@ -297,6 +304,11 @@ mp:
     from: { season: 1, ep: [1, 24] }
     to_tmdb: 233291
     to: { season: 1, ep: [1, 24] }  
+  # 宇宙啦啦队  
+  - tmdb: 316013
+    from: { season: 1, ep: [1, 30] }
+    to_tmdb: 316099
+    to: { season: 1, ep: [1, 30] }
   
 
 # ==================== 制作组 ====================
