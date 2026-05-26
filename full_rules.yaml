@@ -19,6 +19,9 @@ mr:
     replace: "一九一七."
   - pattern: "^2046\\."
     bind: { tmdb: 844, media: movie }
+  # 喀什恋歌  
+  - pattern: Bloom Life
+    bind: { tmdb: 289708, media: tv }
 
   # --- 数字开头容易混淆的标题 ---
   - pattern: "^12\\.Monkeys"
@@ -138,6 +141,12 @@ mr:
       media: tv
       season: 1  
 
+  # --- 正则替换 ---
+  - pattern: Blu-rayRemux
+    replace: Blu-ray.Remux
+  - pattern: "(?i)\\b·\\b"
+    replace: .
+  
   # --- 无效发布组标签清理 ---
   - pattern: "-SC(?=[\\W_]|$)"
     action: remove
