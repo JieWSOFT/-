@@ -140,7 +140,15 @@ mr:
       tmdb: 316099
       media: tv
       season: 1  
-
+      
+  # --- 新网球王子 U-17 世界杯 半决赛篇tmdbid绑定 ---
+  - pattern: (?i)新网球王子 U-17 世界杯 半决赛篇
+    bind:
+      tmdb: 205493
+      media: tv
+      season: 2
+      episode: $1
+      
   # --- 正则替换 ---
   - pattern: Blu-rayRemux
     replace: Blu-ray.Remux
