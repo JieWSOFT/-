@@ -996,8 +996,8 @@ quality:
         enabled: true
         weight: 16
     exclude:
-      resolutions: [360p]
-      codecs: [Xvid, DivX]
+      resolutions: []
+      codecs: []
       hdr_types: []
   # --------------------------------------------------------------------------
   # 本地strm洗版，关闭ff,按画质评分选最优
@@ -1050,6 +1050,70 @@ quality:
         enabled: true
         weight: 16
     exclude:
-      resolutions: [360p]
-      codecs: [Xvid, DivX]
+      resolutions: []
+      codecs: []
+      hdr_types: []
+  # --------------------------------------------------------------------------
+  # 基于寂寞版画质优先的双版本洗版，开启DV,HDR双版本，开启ff,按画质评分选最优
+  # --------------------------------------------------------------------------
+  - name: 双版本寂寞画质洗版github
+    id: jimo2-github
+    source_extract_metadata: true
+    dest_extract_metadata: true
+    version:
+      enabled: true
+      slots:
+        - name: DV
+          match:
+            hdr: [Dolby Vision, Dolby Vision P7, Dolby Vision P8, Dolby Vision P5]
+        - name: HDR
+          match:
+            hdr: [HDR10+, HDR10,HDR,SDR]
+      unmatched: skip
+    scoring:
+      resolution:
+        enabled: true
+        weight: 15
+        priority: [2160p, 1080p, 108i, 720p, 480p]
+      source:
+        enabled: true
+        weight: 5
+        priority: [Remux+UHD BluRay, Remux+BluRay, Remux+BD, UHD BluRay, BluRay, WEB-DL, WEBRip, WEB, Unknown, HDTV, DVDRip, DVD, CAM]
+      video_codec:
+        enabled: true
+        weight: 8
+        priority: [AV1, H.265, H.264, VP9]
+      audio_codec:
+        enabled: false
+        weight: 0
+        priority: [DTS:X, TrueHD Dolby Atmos, DTS-HD MA, Dolby TrueHD, DTS-HD, Dolby Digital Plus Atmos, Dolby Digital Plus, DTS, Dolby Digital, FLAC, AAC, MP3]
+      hdr:
+        enabled: true
+        weight: 40
+        priority: [Dolby Vision P7,Dolby Vision P5,Dolby Vision P8,Dolby Vision, HDR10+, HDR10, HLG, HDR, SDR]
+      color_depth:
+        enabled: true
+        weight: 3
+        priority: [12-bit, 10-bit, 8-bit]
+      frame_rate:
+        enabled: true
+        weight: 5
+        priority: [120fps, 60fps, 30fps, 25fps, 24fps]
+      subtitle:
+        enabled: true
+        weight: 1
+        priority: [PGS 简体中文特效,PGS 简体中文,ASS 简中特效,SRT 简体中文,PGS 繁体中文,SRT 繁体中文]
+      file_extension:
+        enabled: true
+        weight: 2
+        priority: [mp4, mkv, ts, m2ts]
+      file_size:
+        enabled: false
+        weight: 0
+      bitrate:
+        enabled: true
+        weight: 16
+    exclude:
+      resolutions: []
+      codecs: []
       hdr_types: []
