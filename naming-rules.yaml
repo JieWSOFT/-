@@ -178,3 +178,27 @@ naming:
     tv:
       folder: "{{title}} ({{year}}) [tmdbid-{{tmdbid}}]/Season {{season02}}"
       file: "{{title}} - {{seasonEpisode}} - {{probeResolution}} {{probeCodec}} {{probeAudio}} {{probeHDR}}.{{fileExt}}"
+  # --------------------------------------------------------------------------
+  # ff探测混合规则：添加码率命名
+  # --------------------------------------------------------------------------
+  - name: 探测混合命名github码率版
+    id: fix-github
+    movie:
+      folder: "{{title}} ({{year}}) [tmdbid={{tmdbid}}]"
+      file: "{{title}}.{{year}}.{{probeResolution}}.{{source}}.{{edition}}.{{probeHDR}}.{{probeBitrate}}.{{probeCodec}}.{{probeAudio}}.{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) [tmdbid={{tmdbid}}]/Season {{season}}"
+      file: "{{title}}.{{year}}.{{seasonEpisode}}.{{probeResolution}}.{{source}}.{{edition}}.{{probeHDR}}.{{probeBitrate}}.{{probeCodec}}.{{probeAudio}}.{{fileExt}}"
+      
+  # --------------------------------------------------------------------------
+  # 源数据探测：源信息命名添加码率，对应ff混合探测
+  # --------------------------------------------------------------------------
+  - name: 源信息命名github码率版
+    id: filename-github
+    movie:
+      folder: "{{title}} ({{year}}) [tmdbid={{tmdbid}}]"
+      file: "{{title}}.{{year}}.{{videoFormat}}.{{source}}.{{edition}}.{{dynamicRange}}.{{bitrate}}.{{videoCodec}}.{{audioCodec}}.{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) [tmdbid={{tmdbid}}]/Season {{season}}"
+      file: "{{title}}.{{year}}.{{seasonEpisode}}.{{videoFormat}}.{{source}}.{{edition}}.{{dynamicRange}}.{{bitrate}}.{{videoCodec}}.{{audioCodec}}.{{fileExt}}"
+      
