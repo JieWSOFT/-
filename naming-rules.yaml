@@ -201,4 +201,16 @@ naming:
     tv:
       folder: "{{title}} ({{year}}) [tmdbid={{tmdbid}}]/Season {{season}}"
       file: "{{title}}.{{year}}.{{seasonEpisode}}.{{videoFormat}}.{{source}}.{{edition}}.{{dynamicRange}}.{{bitrate}}.{{videoCodec}}.{{audioCodec}}.{{fileExt}}"
+
+  # --------------------------------------------------------------------------
+  # 殊途规则：完整探测信息命名
+  # --------------------------------------------------------------------------
+  - name: 殊途-Full
+    id: shutu-full
+    movie:
+      folder: "{{title}} ({{year}}) {tmdb-{{tmdbid}}}"
+      file: "{{title}}.{{year}}.{{probeResolution}}.{{source}}.{{edition}}.{{probeHDR}}.{{probeCodec}}.{{probeAudio}}.{{fileExt}}"
+    tv:
+      folder: "{{title}} ({{year}}) {tmdb-{{tmdbid}}}/Season {{season}}"
+      file: "{{title}}.{{year}}.{{seasonEpisode}}.第{{episode}}集.{{probeResolution}}.{{source}}.{{edition}}.{{probeHDR}}.{{probeCodec}}.{{probeAudio}}.{{fileExt}}"
       
