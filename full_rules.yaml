@@ -146,6 +146,12 @@ mr:
     bind:
       tmdb: 33025
       media: tv
+
+  # --- 陌生人：第三章tmdbid绑定 ---
+  - pattern: 陌生人：第三章
+    bind:
+      tmdb: 1010755
+      media: movie
       
   # --- 新网球王子 U-17 世界杯 半决赛篇tmdbid绑定 ---
   - pattern: (?i)新网球王子 U-17 世界杯 半决赛篇
