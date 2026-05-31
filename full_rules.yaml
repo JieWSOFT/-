@@ -332,7 +332,11 @@ mp:
     from: { season: 4, ep: [37, 52] }
     to_tmdb: 83708
     to: { season: 4, ep: [1, 16] }
-  
+  # 波吉亚家族
+  - tmdb: 34388
+    from: { season: 1, ep: [1, 1] }
+    to_tmdb: 33025
+    to: { season: 1, ep: [1, 1] }
 
 # ==================== 制作组 ====================
 groups:
