@@ -841,7 +841,7 @@ quality:
         - name: 4K DV
           match:
             resolution: [2160p]
-            hdr: [Dolby Vision, Dolby Vision P7, Dolby Vision P8, Dolby Vision P5]
+            hdr: [Dolby Vision, Dolby Vision P7, Dolby Vision P5, Dolby Vision P8]
         - name: 4K HDR
           match:
             resolution: [2160p]
@@ -906,8 +906,8 @@ quality:
         weight: 10
         priority:
           - Dolby Vision P7
-          - Dolby Vision P8
           - Dolby Vision P5
+          - Dolby Vision P8
           - Dolby Vision
           - HDR10+
           - HDR10
@@ -1065,7 +1065,7 @@ quality:
       slots:
         - name: DV
           match:
-            hdr: [Dolby Vision, Dolby Vision P7, Dolby Vision P8, Dolby Vision P5]
+            hdr: [Dolby Vision, Dolby Vision P7, Dolby Vision P5, Dolby Vision P8]
         - name: HDR
           match:
             hdr: [HDR10+, HDR10,HDR,SDR]
@@ -1181,8 +1181,8 @@ quality:
         weight: 40
         priority:
           - Dolby Vision P7
-          - Dolby Vision P8
           - Dolby Vision P5
+          - Dolby Vision P8
           - Dolby Vision
           - HDR10+
           - HDR10
