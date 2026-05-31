@@ -140,6 +140,12 @@ mr:
       tmdb: 316099
       media: tv
       season: 1  
+ 
+  # --- 波吉亚家族tmdbid绑定 ---
+  - pattern: 波吉亚家族
+    bind:
+      tmdb: 33025
+      media: tv
       
   # --- 新网球王子 U-17 世界杯 半决赛篇tmdbid绑定 ---
   - pattern: (?i)新网球王子 U-17 世界杯 半决赛篇
