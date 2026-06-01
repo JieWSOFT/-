@@ -56,6 +56,9 @@ mr:
     bind: { tmdb: 5857, media: tv }
   - pattern: "正义使者\\s*-\\s*我的英雄学院之非法英雄"
     bind: { tmdb: 280110, media: tv }
+  - pattern: "Jae[-. _]?seok['’]?[. _-]?s[. _-]+B[. _-]*(?:and|&)[. _-]*B[. _-]+Rules"
+    bind: { tmdb: 318167, media: tv }
+
 
   # --- 少女与战车 最终章系列 ---
   - pattern: "少女与战车 最终章 ～第1话～"
