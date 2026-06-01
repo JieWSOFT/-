@@ -1173,8 +1173,8 @@ quality:
         priority: [mkv, mp4, m2ts, ts]
 
       file_size:
-        enabled: true
-        weight: 2
+        enabled: false
+        weight: 0
 
       bitrate:
         enabled: true
