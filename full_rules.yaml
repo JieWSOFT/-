@@ -352,6 +352,10 @@ mp:
     from: { season: 1, ep: [1, 1] }
     to_tmdb: 33025
     to: { season: 1, ep: [1, 1] }
+  # 爱书的下克上
+  - tmdb: 91768
+    from: { season: 1, ep: [37, 48] }
+    to:   { season: 2, ep: [1, 12] }  
 
 # ==================== 制作组 ====================
 groups:
