@@ -1,0 +1,36 @@
+# 输出文件名/元数据的正则替换规则 output_mr
+# 作用：统一媒体文件中的视频编码、音频格式等标签，避免格式不统一
+output_mr:
+  # 视频编码格式标准化
+  - pattern: "(?i)\\bH\\.?265\\b"  # 匹配不区分大小写的 H.265 / H265
+    replace: H265                  # 统一替换为大写格式 H265
+  - pattern: "(?i)\\bH\\.?264\\b"  # 匹配不区分大小写的 H.264 / H264
+    replace: H264                  # 统一替换为大写格式 H264
+
+  # 杜比视界相关（已注释，如需启用可取消注释）
+  #- pattern: "(?i)\\bDolby Vision(?:\\s+P\\d+|\\s+FEL|\\s+MEL)?\\b"
+  #  replace: DV
+
+  # 杜比音频格式标准化
+  - pattern: "(?i)Dolby Digital Plus"  # 匹配不区分大小写的 Dolby Digital Plus
+    replace: DDP                       # 统一替换为缩写 DDP
+  - pattern: "(?i)Dolby Digital\\b"    # 匹配不区分大小写的 Dolby Digital（防止和其他含Digital的词冲突）
+    replace: DD                        # 统一替换为缩写 DD
+  - pattern: "(?i)Dolby Digital Plus Atmos"  # 匹配带Atmos的DDP音轨
+    replace: DDP-Atmos                       # 统一替换为 DDP-Atmos
+  - pattern: "(?i)\\bDolby TrueHD(?:\\s+\\d+\\.\\d+)?\\b"  # 匹配带或不带声道数的 Dolby TrueHD
+    replace: TrueHD                                        # 统一替换为 TrueHD
+  - pattern: "(?i)TrueHD Dolby Atmos"  # 匹配带Atmos的TrueHD音轨
+    replace: TrueHD-Atmos              # 统一替换为 TrueHD-Atmos
+
+  # DTS音频格式标准化
+  - pattern: "(?i)\\bDTS:X\\b"    # 匹配不区分大小写的 DTS:X
+    replace: DTSX                 # 统一替换为 DTSX
+  - pattern: "(?i)\\bDTS-HD MA\\b"  # 匹配不区分大小写的 DTS-HD MA
+    replace: DTSHD-MA              # 统一替换为 DTSHD-MA
+  - pattern: "(?i)\\bDTS-HD\\b"    # 匹配不区分大小写的 DTS-HD（不含MA）
+    replace: DTSHD                 # 统一替换为 DTSHD
+
+  # 多余空格清理（修正了原代码语法问题）
+  - pattern: "\\s{2,}"  # 匹配2个及以上的连续空格
+    replace: " "        # 替换为单个空格，避免文件名出现多余空格
