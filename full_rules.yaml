@@ -155,6 +155,12 @@ mr:
     bind:
       tmdb: 1010755
       media: movie
+
+  # 一叠间漫画咖啡屋生活！
+  - pattern: Ichijouma Mankitsugurashi
+    bind:
+      tmdb: 295751
+      media: tv
       
   # --- 新网球王子 U-17 世界杯 半决赛篇tmdbid绑定 ---
   - pattern: (?i)新网球王子 U-17 世界杯 半决赛篇
@@ -347,20 +353,11 @@ mp:
     from: { season: 4, ep: [37, 52] }
     to_tmdb: 83708
     to: { season: 4, ep: [1, 16] }
-  # 波吉亚家族
-  - tmdb: 34388
-    from: { season: 1, ep: [1, 1] }
-    to_tmdb: 33025
-    to: { season: 1, ep: [1, 1] }
   # 爱书的下克上
   - tmdb: 91768
     from: { season: 1, ep: [37, 48] }
     to:   { season: 2, ep: [1, 12] }  
-  # 一叠间漫画咖啡屋生活！
-  - tmdb: 319496
-    from: { season: 1, ep: [1, 1] }
-    to_tmdb: 295751
-    to: { season: 1, ep: [1, 1] }
+
 
 # ==================== 制作组 ====================
 groups:
