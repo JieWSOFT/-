@@ -169,6 +169,13 @@ mr:
       media: tv
       season: 2
       episode: $1
+  # --- 熊出没之熊熊乐园 ---
+  - pattern: (?i)熊熊乐园
+    bind:
+      tmdb: 106223
+      media: tv
+      episode: $1  
+  
       
   # --- 正则替换 ---
   - pattern: Blu-rayRemux
