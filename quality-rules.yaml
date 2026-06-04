@@ -1120,7 +1120,7 @@ quality:
 
   # --------------------------------------------------------------------------
   # 殊途版：杜比优先洗版（P7 > P5 > P8）
-  # 开启 ffprobe / 保留字幕与帧率 / 防止低码率 DV 反杀高质量 HDR10+/Remux
+  # 开启 ffprobe / 关闭字幕与帧率干扰 / 防止低码率 DV 反杀高质量 HDR10+/Remux
   # --------------------------------------------------------------------------
   - name: 殊途-杜比优先
     id: quality-shutu-dolby
@@ -1129,12 +1129,12 @@ quality:
     scoring:
       resolution:
         enabled: true
-        weight: 15
+        weight: 20
         priority: [2160p, 1080p, 108i, 720p, 480p]
 
       source:
         enabled: true
-        weight: 12
+        weight: 3
         priority: [Remux+UHD BluRay, Remux+BluRay, Remux+BD, UHD BluRay, BluRay, WEB-DL, WEBRip, WEB, Unknown, HDTV, DVDRip, DVD, CAM]
 
       video_codec:
@@ -1149,7 +1149,7 @@ quality:
 
       hdr:
         enabled: true
-        weight: 40
+        weight: 30
         priority: [Dolby Vision P7, Dolby Vision P5, Dolby Vision P8, Dolby Vision, HDR10+, HDR10, HLG, HDR, SDR]
 
       color_depth:
@@ -1158,19 +1158,19 @@ quality:
         priority: [12-bit, 10-bit, 8-bit]
 
       frame_rate:
-        enabled: true
-        weight: 5
+        enabled: false
+        weight: 0
         priority: [120fps, 60fps, 30fps, 25fps, 24fps]
 
       subtitle:
-        enabled: true
-        weight: 1
+        enabled: false
+        weight: 0
         priority: [PGS 简体中文特效, PGS 简体中文, ASS 简中特效, SRT 简体中文, PGS 繁体中文, SRT 繁体中文]
 
       file_extension:
-        enabled: true
-        weight: 1
-        priority: [mkv, mp4, m2ts, ts]
+        enabled: false
+        weight: 0
+        priority: [mkv, mp4]
 
       file_size:
         enabled: false
@@ -1178,7 +1178,7 @@ quality:
 
       bitrate:
         enabled: true
-        weight: 20
+        weight: 25
 
     exclude:
       resolutions: [360p]
