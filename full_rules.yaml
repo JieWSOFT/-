@@ -171,6 +171,11 @@ mr:
     bind:
       tmdb: 146312
       media: movie
+
+  - pattern: 沧元图
+    bind:
+      tmdb: 229192
+      media: tv
       
   # --- 新网球王子 U-17 世界杯 半决赛篇tmdbid绑定 ---
   - pattern: (?i)新网球王子 U-17 世界杯 半决赛篇
