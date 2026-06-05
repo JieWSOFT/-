@@ -4157,46 +4157,46 @@ tmdb_override:
     title: "女租客"
     keywords:
       - id: 190370
-      - name: "erotic movie"
+        name: "erotic movie"
 
   - tmdb_id: 34617
     media_type: movie
     title: "美丽小蜜桃"
     keywords:
       - id: 190370
-      - name: "erotic movie"
+        name: "erotic movie"
 
   - tmdb_id: 285452
     media_type: movie
     title: "美丽小蜜桃2"
     keywords:
       - id: 190370
-      - name: "erotic movie"
+        name: "erotic movie"
 
   - tmdb_id: 285454
     media_type: movie
     title: "美丽小蜜桃3：探寻"
     keywords:
       - id: 190370
-      - name: "erotic movie"
+        name: "erotic movie"
 
   - tmdb_id: 945045
     media_type: movie
     title: "紧缚：华之章"
     keywords:
       - id: 190370
-      - name: "erotic movie"
+        name: "erotic movie"
 
-- tmdb_id: 146312
+  - tmdb_id: 146312
     media_type: movie
     title: "聊斋之欲焰三娘子"
     keywords:
       - id: 190370
-      - name: "erotic movie"
+        name: "erotic movie"
 
   - tmdb_id: 129171
     media_type: movie
     title: "聊斋志异之孽欲孤鬼"
     keywords:
       - id: 190370
-      - name: "erotic movie"
+        name: "erotic movie"
