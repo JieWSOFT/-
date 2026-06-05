@@ -161,6 +161,16 @@ mr:
     bind:
       tmdb: 295751
       media: tv
+  
+  - pattern: 聊斋志异之孽欲孤魂
+    bind:
+      tmdb: 129171
+      media: movie
+  
+  - pattern: 聊斋艳谭之欲焰三娘子
+    bind:
+      tmdb: 146312
+      media: movie
       
   # --- 新网球王子 U-17 世界杯 半决赛篇tmdbid绑定 ---
   - pattern: (?i)新网球王子 U-17 世界杯 半决赛篇
