@@ -4152,7 +4152,6 @@ tmdb_override:
       - id: 190370
         name: "erotic movie"
 
-tmdb_override:
   - tmdb_id: 1168732
     media_type: movie
     title: "女租客"
