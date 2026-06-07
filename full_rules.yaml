@@ -176,6 +176,8 @@ mr:
     bind:
       tmdb: 229192
       media: tv
+
+      
       
   # --- 新网球王子 U-17 世界杯 半决赛篇tmdbid绑定 ---
   - pattern: (?i)新网球王子 U-17 世界杯 半决赛篇
@@ -189,7 +191,18 @@ mr:
     bind:
       tmdb: 106223
       media: tv
-      episode: $1  
+      episode: $1 
+  # --- 稚爱目击 ---      
+  - pattern: "(?i)The.Witness.*S(\\d+)*E(\\d+).2160p.NF.WEB-DL.DDP5.1.Atmos.DV.H.265-HiveWeb"
+    bind:
+      tmdb: 280511
+      media: tv
+      episode: $1
+  - pattern: "(?i)The.Witness.*S(\\d+)*E(\\d+).2160p.NF.WEB-DL.DDP5.1.Atmos.HDR.H.265-HiveWeb"
+    bind:
+      tmdb: 280511
+      media: tv
+      episode: $1   
   
       
   # --- 正则替换 ---
