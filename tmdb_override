@@ -3158,13 +3158,6 @@ tmdb_override:
       - id: 190370
         name: "erotic movie"
 
-  - tmdb_id: 10882
-    media_type: movie
-    title: "睡美人"
-    keywords:
-      - id: 190370
-        name: "erotic movie"
-
   - tmdb_id: 118285
     media_type: movie
     title: "零课女警之欲望的代价"
