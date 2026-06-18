@@ -2584,13 +2584,6 @@ tmdb_override:
       - id: 190370
         name: "erotic movie"
 
-  - tmdb_id: 412117
-    media_type: movie
-    title: "密爱"
-    keywords:
-      - id: 190370
-        name: "erotic movie"
-
   - tmdb_id: 452077
     media_type: movie
     title: "两面神：欲望的两张脸"
