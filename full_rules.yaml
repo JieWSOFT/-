@@ -371,8 +371,8 @@ mp:
     from: { season: 8, ep: [1, 13] }
     to: { season: 7, ep: [1, 13] }
   - tmdb: 97199
-    from: { season: 9, ep: [1, 10] }
-    to: { season: 8, ep: [1, 10] }
+    from: { season: 9, ep: [1, 16] }
+    to: { season: 8, ep: [1, 16] }
   # 搜神记  
   - tmdb: 317329
     from: { season: 1, ep: [1, 24] }
