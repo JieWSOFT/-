@@ -3,3 +3,4 @@ payload:
   - DOMAIN-SUFFIX,mediahelp,节点选择
   - DOMAIN-SUFFIX,bzmshang.top,直链
   - DOMAIN-SUFFIX,cpgroup.cn,直链
+  - IP-CIDR,216.22.43.80/32,直连,no-resolve
