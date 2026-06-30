@@ -1129,7 +1129,7 @@ quality:
     scoring:
       resolution:
         enabled: true
-        weight: 20
+        weight: 30
         priority: [2160p, 1080p, 108i, 720p, 480p]
 
       source:
@@ -1178,7 +1178,7 @@ quality:
 
       bitrate:
         enabled: true
-        weight: 25
+        weight: 20
 
     exclude:
       resolutions: [360p]
